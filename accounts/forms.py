@@ -6,7 +6,7 @@ class UserCreateForm(UserCreationForm):
 
     class Meta:
         fields = ('username', 'email', 'password1', 'password2')  # these are the fiels we want the user to fill out
-        model = get_user_model                                    # allows us to get the model of whoever's accessing the website
+        model = get_user_model()                                    # allows us to get the model of whoever's accessing the website
 
 
     def __init__(self, *args, **kwargs):

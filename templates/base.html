@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
     <head>
         <meta charset="UTF-8"/>
@@ -13,6 +14,12 @@
 	<!-- bootstrap java stuff -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	<!-- Link a google fonts here if you wish later on -->
+
+	<!-- link to our master css file -->
+	<link href="{% static 'css/master.css' %}" rel="stylesheet"/>
+
     </head>
 
 
@@ -21,15 +28,34 @@
 
 	<!-- navbar -->
 	<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black">
+
 	    <a class="navbar-brand" href="{% url 'home' %}">CopsAccountable</a>
+	    
 	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	    </button>
+	    
 	    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
 		    <a class="nav-item nav-link active" href="{% url 'about' %}">About<span class="sr-only">(current)</span></a>
 		</div>
 	    </div>
+
+	    <!-- changes to sign in or log jout based on the status of the user -->
+	    <ul class="nav justify-content-end">
+		{% if user.is_authenticated %}
+		<li class="nav-item"><a class ="nav-link" href="">Post</a></li>
+		<li class="nav-item"><a class ="nav-link" href="{% url 'accounts:logout' %}">Log Out</a></li>
+		{% else %}
+
+		<li class="nav-item"><a class ="nav-link" href="{% url 'accounts:login' %}">Log In</a></li>
+
+
+		<li class="nav-item"><a class ="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a></li>
+
+		{% endif %}
+	    </ul>
+	    
 	</nav>
 
 
