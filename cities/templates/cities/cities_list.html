@@ -1,0 +1,69 @@
+{% extends 'cities/cities_base.html' %}
+
+{% block pre_city }
+
+
+<div class="col-md-4">
+
+    <div class="content">
+
+	{% if user.is_authenticated }
+
+	<h2>Welcome back
+	    <a href="{% url 'posts:for_user' username=user.username %}">@{{user.username }}</a>
+	</h2>
+
+	{% else %}
+	
+	{% endif %}
+
+	<h2>Cities List</h2>
+	
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block city_content }
+
+
+<div class="col-md-8">
+
+
+  <div class="list-group">
+      {% for group in object_list } <!--this is from the views.py, it automatically passes this list-->
+      <a href="{% url 'cities:single' slug=city.slug % }"
+	 class ="list-group-item list-group-item-action flex-column align-items-start">
+
+
+	  <h3 class="mb-1">{{ group.name }}</h3>
+	  <div class="d-flex w-40 justify-content-between">
+	      <small class="text-muted"><span class="badge badge-secondary">
+		  {{ group.posts.count }}</span> post{{ group.posts.count|pluralize }}</small>
+	      <span></span><span></span>
+	  </div>
+
+
+      </a>
+
+      {% endfor %}
+  </div>
+
+
+</div>
+
+
+{% endblock %}
+
+
+{% block post_city }
+
+
+
+
+
+{% endblock %}
