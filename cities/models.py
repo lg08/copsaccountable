@@ -29,7 +29,7 @@ class City(models.Model):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-
+x
         # potentially helpful link: https://stackoverflow.com/questions/43179875/when-to-use-django-get-absolute-url-method
     def get_absolute_url(self):
         return reverse("cities:single", kwargs={"slug": self.slug})
@@ -39,3 +39,6 @@ class City(models.Model):
     # just tells django what the default ordering is
     class Meta:
         ordering = ["name"]
+
+
+        # test
