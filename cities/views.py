@@ -25,3 +25,5 @@ class SingleGroup(generic.DetailView):
 class ListGroups(generic.ListView):
     model = Group
     # good choice for template name is something like "cities_list.html"
+
+    #  seems to be done
