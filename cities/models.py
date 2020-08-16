@@ -38,6 +38,3 @@ class City(models.Model):
     # just tells django what the default ordering is
     class Meta:
         ordering = ["name"]
-
-
-        # test

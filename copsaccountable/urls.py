@@ -26,4 +26,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('test/', views.TestPage.as_view(), name ='test'),
     path('thanks/', views.ThanksPage.as_view(), name = 'thanks'),
+    path('cities/',include("cities.urls", namespace="cities")),
+
 ]
