@@ -1,11 +1,11 @@
-{% extends "groups/group_base.html" %}
+{% extends "cities/cities_base.html" %}
 
-{% block precity %}
+{% block pre_city %}
 
 
 <div class="container">
 
-  <h1>{% city.name %}</h1>
+  <h1>{{ city.name }}</h1>
 
 </div>
 
@@ -16,11 +16,10 @@
 
 <div class="col-md-8">
 
-        {% if group.posts.count == 0 %}
-        <h2>No posts in this group yet!</h2>
+        {% if cities.posts.count == 0 %}
+        <h2>No posts in this city yet! Please post one!</h2>
 
         {% else %}
-
                 {% for post in city.posts.all %}
                         {% include "posts/_post.html" %}
                 {% endfor %}

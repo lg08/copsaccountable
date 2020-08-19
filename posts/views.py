@@ -52,7 +52,7 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
 
 class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
     # form_class = forms.PostForm
-    fields = ('message','city')
+    fields = ('message','city', 'title')
     model = models.Post
 
     # def get_form_kwargs(self):

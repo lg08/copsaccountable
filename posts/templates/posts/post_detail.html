@@ -1,0 +1,32 @@
+{% extends "posts/post_base.html" %}
+
+{% block post_content %}
+<!-- <div class="col-md-8"> -->
+  <!-- {% include "posts/_post.html" %} -->
+
+  <div class="col-md-12">
+
+<div class="row justify-content-center">
+    <div class="card mb-3 col" style="max-width: 540px;">
+	<div class="row no-gutters">
+	    <div class="col-4">
+		<img src="..." class="card-img" alt="...">
+	    </div>
+	    <div class="col-8">
+		<div class="card-body">
+		    <h5 class="card-title">{{ post.title }}</h5>
+		    <p class="card-text">{{ post.message_html|safe }}</p>
+		    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>  
+  
+</div>
+  
+  
+<!-- </div> -->
+{% endblock %}
+
+<!-- seems to be done rn -->

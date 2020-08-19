@@ -1,9 +1,11 @@
 from django import forms
 from . import models
 
+
+# documentation can be here: https://docs.djangoproject.com/en/3.1/topics/forms/modelforms/
 class PostForm(forms.ModelForm):
     class Meta:
-        fields = ("message", "city")
+        fields = ("message", "city", "title")
         model = models.Post
 
 
@@ -12,8 +14,8 @@ class PostForm(forms.ModelForm):
         user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
         if user is not None:
-            self.fields["group"].queryset = (
-                models.City.objects.filter(pk__in=user.groups.values_list("group__pk"))
+            self.fields["city"].queryset = (
+                models.City.objects.filter(pk__in=user.cities.values_list("city__pk"))
             )
 
 

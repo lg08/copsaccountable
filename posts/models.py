@@ -1,4 +1,4 @@
-from django.db import  models
+from django.db import models
 from django.conf import settings
 from django.urls import reverse
 
@@ -14,14 +14,19 @@ User = get_user_model()
 class Post(models.Model):
     user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)  # maybe change this later
     created_at = models.DateTimeField(auto_now=True)
-    message = models.TextField(editable=False)
+
+    # I'm testing this out
+    title = models.TextField(max_length=50, default='post_title')
+    
+    message = models.TextField()
+    message_html = models.TextField(editable=False)
     city = models.ForeignKey(City, related_name='posts', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.message
 
     def save(self, *args, **kwargs):
-        self.message_html = misaka.html(sel.message)
+        self.message_html = misaka.html(self.message)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

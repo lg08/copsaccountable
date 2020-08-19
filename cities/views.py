@@ -19,6 +19,7 @@ from . import models
 # I think this automatically searches for template names if none are defined, but you can also define a "template_name"
 class SingleCity(generic.DetailView):
     model = City
+    template_name = "cities/cities_detail.html"
 
 
     # doc here: https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-display/

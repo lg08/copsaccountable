@@ -3,26 +3,26 @@
 {% block pre_city %}
 
 
-<div class="col-md-4">
+<!-- <div class="col-md-4"> -->
 
-    <div class="content">
+<!--     <div class="content"> -->
 
-        {% if user.is_authenticated %}
+<!--         {% if user.is_authenticated %} -->
 
-        <h2>Welcome back
-            <a href="{% url 'posts:for_user' username=user.username %}">@{{user.username }}</a>
-        </h2>
+<!--         <h2>Welcome back -->
+<!--             <a href="{% url 'posts:for_user' username=user.username %}">@{{user.username }}</a> -->
+<!--         </h2> -->
 
-        {% else %}
+<!--         {% else %} -->
 
-        {% endif %}
+<!--         {% endif %} -->
 
-        <h2>Cities List</h2>
+<!--         <h2>Cities List</h2> -->
 
 
-    </div>
+<!--     </div> -->
 
-</div>
+<!-- </div> -->
 
 
 {% endblock %}
@@ -35,22 +35,22 @@
 
 
   <div class="list-group">
-      {% for city in object_list %} <!--this is from the views.py, it automatically passes this list-->
-      <a href="{% url 'cities:single' slug=city.slug %}"
-         class ="list-group-item list-group-item-action flex-column align-items-start">
+    {% for city in object_list %} <!--this is from the views.py, it automatically passes this list-->
+    <a href="{% url 'cities:single' slug=city.slug %}"
+       class ="list-group-item list-group-item-action flex-column align-items-start">
 
 
-          <h3 class="mb-1">{{ city.name }}</h3>
-          <div class="d-flex w-40 justify-content-between">
-              <small class="text-muted"><span class="badge badge-secondary">
-                  {{ city.posts.count }}</span> post{{ city.posts.count|pluralize }}</small>
-              <span></span><span></span>
-          </div>
+      <h3 class="mb-1">{{ city.name }}</h3>
+      <div class="d-flex w-40 justify-content-between">
+        <small class="text-muted"><span class="badge badge-secondary">
+            {{ city.posts.count }}</span> post{{ city.posts.count|pluralize }}</small>
+        <span></span><span></span>
+      </div>
 
 
-      </a>
+    </a>
 
-      {% endfor %}
+    {% endfor %}
   </div>
 
 
