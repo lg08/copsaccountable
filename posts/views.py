@@ -16,7 +16,7 @@ User = get_user_model()
 
 class PostList(SelectRelatedMixin, generic.ListView):
     model = models.Post
-    select_related = ("user", "city")
+    select_related = ("user", "city")  # not entirely sure what this does yet
 
 
 class UserPosts(generic.ListView):

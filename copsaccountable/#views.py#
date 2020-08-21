@@ -1,20 +1,19 @@
 from django.views.generic import TemplateView
-from posts import models # forms
-from django.views.generic import ListView
+from posts import models, forms
 
-
-class HomePage(ListView):
+class HomePage(TemplateView):
     template_name = 'index.html'
-    model = models.Post
-    select_related = ("user", "city")  # not entirely sure what this does yet
+
+
 
 class AboutPage(TemplateView):
     template_name = 'about.html'
+    model = models.Post
+    select_related
 
-    
+
 class TestPage(TemplateView):
     template_name = "test.html"
 
-    
 class ThanksPage(TemplateView):
     template_name = 'thanks.html'
