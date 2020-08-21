@@ -39,3 +39,6 @@ class Post(models.Model):
 
 
         # seems to be done rn, but doesn't have videos rn
+
+
+        

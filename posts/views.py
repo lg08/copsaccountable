@@ -54,6 +54,7 @@ class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
     # form_class = forms.PostForm
     fields = ('message','city', 'title')
     model = models.Post
+    template_name = "posts/post_form.html"
 
     # def get_form_kwargs(self):
     #     kwargs = super().get_form_kwargs()
