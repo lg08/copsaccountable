@@ -30,8 +30,9 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("posts:single", kwargs={"username": self.user.username, "pk": self.pk})
-
+        # return reverse("posts:single", kwargs={"username": self.user.username, "pk": self.pk})
+        return reverse("posts:for_user", kwargs={"username": self.user.username})
+    
     class Meta:
         ordering = ["-created_at"]
         unique_together = ["user", "message"]
@@ -41,4 +42,5 @@ class Post(models.Model):
         # seems to be done rn, but doesn't have videos rn
 
 
-        
+        # like button
+        # https://stackoverflow.com/questions/15407985/django-like-button/15408120
