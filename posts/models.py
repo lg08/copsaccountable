@@ -16,14 +16,14 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     # I'm testing this out
-    title = models.TextField(max_length=30, null=True, blank=True)
+    title = models.CharField(max_length=30, null=True, blank=True)
     
     message = models.TextField()
     message_html = models.TextField(editable=False)
     video = models.FileField(upload_to='videos/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
-    location_information = models.TextField(max_length=120, null=True, blank=True)
-    time_information = models.TextField(max_length=120, null=True, blank=True)
+    location_information = models.CharField(max_length=120, null=True, blank=True)
+    time_information = models.CharField(max_length=120, null=True, blank=True)
 
     state = models.ForeignKey(State, null=True, blank=False, on_delete=models.CASCADE)
     city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
