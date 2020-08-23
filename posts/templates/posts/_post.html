@@ -25,7 +25,7 @@
 
 
 <div class="row justify-content-center">
-    <div class="card mb-3 col bg-light" style="max-width: 540px;">
+    <div class="card mb-3 col-12 bg-light" <!-- style="max-width: 1000px;" -->
         <div class="row no-gutters">
             <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}" class="stretched-link"> </a> <!--cool stretched link thing-->
 
@@ -50,3 +50,16 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- 
+     <li class="media">
+     {% if post.thumbnail %}
+     <img class="mr-3" src="{{ post.thumbnail.url }}" alt="Generic placeholder image">
+     {% endif %}
+     <div class="media-body">
+     <h5 class="mt-0 mb-1">List-based media object</h5>
+     Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+     </div>
+     </li> -->
