@@ -4,10 +4,10 @@
 
 {% block post_content %}
 <h4>Create New Post</h4>
-<form method="POST" action="{% url 'posts:create' %}" id="PostForm">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
+<form method="POST" action="{% url 'posts:create' %}" id="PostForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
                 <button type="submit" class="btn btn-primary btn-large">Post</button>
         {% endbuttons %}
 </form>
