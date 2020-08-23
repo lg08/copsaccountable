@@ -31,14 +31,14 @@
 
             <div class="col-4">
 
-                <!-- trying this out -->
-                <img src="post.video" class="card-img" alt="this post has no video">
-                
+                {% if post.thumbnail %} <!--having this if somehow fixes the problem-->
+                    <img style="object-fit: conver;" src="{{ post.thumbnail.url }}" class="card-img" alt="this post has no video">
+                {% endif %}
             </div>
             <div class="col-8">
 
                 <div class="card-body">
-                    <h5 class="card-title">{{ post.title }}</h5>
+                    <h5 class="card-title"><strong>{{ post.title }}</strong></h5>
                     <p class="card-text">{{ post.message_html|safe }}</p>
                     <p class="card-text"><small class="text-muted"><time class="time">created at:
                         <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}">
