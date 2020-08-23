@@ -6,7 +6,7 @@ from . import models
 class PostForm(forms.ModelForm):
     class Meta:
         model = models.Post
-        fields = ("title", "message", "city", "time_information", "location_information", "video", "thumbnail")
+        fields = ("title", "message", "state", "city", "time_information", "location_information", "video", "thumbnail")
 
 
 

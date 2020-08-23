@@ -29,7 +29,7 @@ urlpatterns = [
     path('test/', views.TestPage.as_view(), name ='test'),
     path('thanks/', views.ThanksPage.as_view(), name = 'thanks'),
     path('posts/', include("posts.urls", namespace="posts")),
-    path('cities/',include("cities.urls", namespace="cities")),
+    path('locations/',include("cities.urls", namespace="cities")),
 
 ]
 

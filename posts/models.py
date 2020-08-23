@@ -4,7 +4,7 @@ from django.urls import reverse
 
 import misaka
 
-from cities.models import City
+from cities.models import City, State
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -20,11 +20,14 @@ class Post(models.Model):
     
     message = models.TextField()
     message_html = models.TextField(editable=False)
-    city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
     video = models.FileField(upload_to='videos/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
     location_information = models.TextField(max_length=120, null=True, blank=True)
     time_information = models.TextField(max_length=120, null=True, blank=True)
+
+    state = models.ForeignKey(State, null=True, blank=False, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.title

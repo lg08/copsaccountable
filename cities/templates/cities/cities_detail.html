@@ -13,21 +13,20 @@
 
 {% block city_content %}
 
+    <div class="col-12">
 
-<div class="col-md-8">
+        {% if city.posts.count == 0 %}
+            <h2>No posts in this city yet! Please post one!</h2>
 
-        {% if cities.posts.count == 0 %}
-        <h2>No posts in this city yet! Please post one!</h2>
-
-        {% else %}
+            {% else %}
                 {% for post in city.posts.all %}
-                        {% include "posts/_post.html" %}
+                    {% include "posts/_post.html" %}
                 {% endfor %}
+                
+            {% endif %}
 
-        {% endif %}
 
-
-</div>
+        </div>
 
 
 {% endblock %}

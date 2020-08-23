@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from django.views import generic
-from cities.models import City
+from cities.models import City, State
 from . import models
 
 
@@ -27,5 +27,16 @@ class ListCities(generic.ListView):
     model = City
     template_name = "cities/cities_list.html"
     # good choice for template name is something like "cities_list.html"
+    context_object_name = "cities_list"
 
-    #  seems to be done
+
+
+class ListStates(generic.ListView):
+    model = State
+    template_name = "cities/states_list.html"
+    context_object_name = "states_list"
+
+
+class SingleState(generic.DetailView):
+    model = State
+    template_name = 'cities/state_detail.html'
