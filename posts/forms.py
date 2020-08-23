@@ -5,8 +5,8 @@ from . import models
 # documentation can be here: https://docs.djangoproject.com/en/3.1/topics/forms/modelforms/
 class PostForm(forms.ModelForm):
     class Meta:
-        fields = ("message", "city", "title")
         model = models.Post
+        fields = ("title", "message", "city", "time_information", "location_information", "video", "thumbnail")
 
 
 

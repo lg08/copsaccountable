@@ -16,21 +16,25 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     # I'm testing this out
-    title = models.TextField(max_length=50, default='post_title')
+    title = models.TextField(max_length=30, null=True, blank=True)
     
     message = models.TextField()
     message_html = models.TextField(editable=False)
     city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
+    video = models.FileField(upload_to='videos/', null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+    location_information = models.TextField(max_length=120, null=True, blank=True)
+    time_information = models.TextField(max_length=120, null=True, blank=True)
 
     def __str__(self):
-        return self.message
+        return self.title
 
     def save(self, *args, **kwargs):
         self.message_html = misaka.html(self.message)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        # return reverse("posts:single", kwargs={"username": self.user.username, "pk": self.pk})
+        # return reverse("posts:detail", kwargs={"username": self.user.username, "pk": self.pk})
         return reverse("posts:for_user", kwargs={"username": self.user.username})
     
     class Meta:
