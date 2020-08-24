@@ -126,6 +126,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]  # tells django where to go to look for static files
 
+# trying this out
+STATIC_ROOT = 'static/'
+
 
 # these tell the built in views where to go after logging in and out
 LOGIN_REDIRECT_URL = 'test'
