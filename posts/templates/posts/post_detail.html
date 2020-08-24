@@ -37,6 +37,15 @@
             <p>{{ post.message }}</p>
             
         </div>
+
+        <br/><br/>
+        <hr>
+        <br/>
+
+        <form action="{% url 'posts:upvote_post' post.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
+        </form>
         
         
     </div>

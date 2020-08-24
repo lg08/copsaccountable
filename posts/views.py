@@ -3,6 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import Http404
 from django.views import generic
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from . import models
+from django.urls import reverse
 # from django.core.files.storage import FileSystemStorage
 
 # pip install django-braces
@@ -10,6 +14,7 @@ from braces.views import SelectRelatedMixin
 
 from . import forms
 from . import models
+from . import views
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -87,4 +92,9 @@ class UserPosts(generic.ListView):
         return context
     
     
-    # seems to be done rn
+def LikeView(request, pk):
+    post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
+    post.upvotes.add(request.user)
+    return HttpResponseRedirect(reverse('posts:detail',
+                                        kwargs={'pk': pk, 'username': request.user.username}))
+

@@ -28,6 +28,8 @@ class Post(models.Model):
     state = models.ForeignKey(State, null=True, blank=False, on_delete=models.CASCADE)
     city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
 
+    upvotes = models.ManyToManyField(User, related_name='blog_posts')
+
 
     def __str__(self):
         return self.title
