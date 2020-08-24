@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.utils.text import slugify
 # from accounts.models import User
 
-
 import misaka
 
 from django.contrib.auth import get_user_model
