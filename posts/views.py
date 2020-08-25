@@ -109,6 +109,9 @@ class UserPosts(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["post_user"] = self.post_user
         return context
+
+# class UserPage(generic.ListView):
+    
     
     
 def UpvoteView(request, pk):
