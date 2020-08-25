@@ -16,7 +16,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     # I'm testing this out
-    title = models.CharField(max_length=30, null=True, blank=True)
+    title = models.CharField(max_length=100, null=True, blank=True)
     
     message = models.TextField()
     message_html = models.TextField(editable=False)
@@ -29,7 +29,6 @@ class Post(models.Model):
     city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
 
     upvotes = models.ManyToManyField(User, related_name='blog_posts')
-
 
     def __str__(self):
         return self.title
@@ -47,7 +46,7 @@ class Post(models.Model):
     
     class Meta:
         ordering = ["-created_at"]
-        unique_together = ["user", "message"]
+        # unique_together = ["user", "message"]   # not sure what this did, but it didn't let me post two messages with the same title
 
 
 

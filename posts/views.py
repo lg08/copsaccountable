@@ -32,17 +32,34 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
     model = models.Post
     select_related = ("user", "city")
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.filter(
-            user__username__iexact=self.kwargs.get("username")
-        )
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     return queryset.filter(
+    #         user__username__iexact=self.kwargs.get("username")
+    #     )
+
+        
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)  # general context data
         this_post = get_object_or_404(models.Post, pk=self.kwargs['pk'])  # just gets the post we're currently on
         context['total_upvotes'] = this_post.total_upvotes()
+
+        # I'm working on this
+        # this_boolean = User.profile.users.objects.filter(upvoted_posts__id=this_post.pk)
+        # context['created_post'] = this_boolean.count()
+
+        # all_these_posts = User.objects.filter(profile.upvoted_posts
+
+        # for post in User.profile.upvoted_posts:
+        #     if this_post is post:
+        #         context['upvoted_this_post'] = True
+        #     else:
+        #         context['upvoted_this_post'] = False
+        
         return context
+
+        
 
 
 class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
@@ -102,6 +119,6 @@ class UserPosts(generic.ListView):
 def LikeView(request, pk):
     post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
     post.upvotes.add(request.user)
-    request.user.profile.upvoted_posts.add(post.pk)
+    request.user.profile.upvoted_posts.add(post)
     return HttpResponseRedirect(reverse('posts:detail',
                                         kwargs={'pk': pk, 'username': post.user.username}))
