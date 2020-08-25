@@ -100,7 +100,8 @@ class UserPosts(generic.ListView):
     
     
 def LikeView(request, pk):
-        post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
-        post.upvotes.add(request.user)
-        return HttpResponseRedirect(reverse('posts:detail',
+    post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
+    post.upvotes.add(request.user)
+    request.user.profile.upvoted_posts.add(post.pk)
+    return HttpResponseRedirect(reverse('posts:detail',
                                         kwargs={'pk': pk, 'username': post.user.username}))
