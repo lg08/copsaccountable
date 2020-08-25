@@ -6,7 +6,7 @@ from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from . import models
-from posts.models import Upvote
+from posts.models import Upvote, Downvote
 from django.urls import reverse
 # from django.core.files.storage import FileSystemStorage
 
@@ -45,18 +45,12 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)  # general context data
         this_post = get_object_or_404(models.Post, pk=self.kwargs['pk'])  # just gets the post we're currently on
         context['total_upvotes'] = this_post.people_who_upvoted.count()
-
-        # I'm working on this
-        # this_boolean = User.profile.users.objects.filter(upvoted_posts__id=this_post.pk)
-        # context['created_post'] = this_boolean.count()
-
-        # all_these_posts = User.objects.filter(profile.upvoted_posts
-
-        # for post in User.profile.upvoted_posts:
-        #     if this_post is post:
-        #         context['upvoted_this_post'] = True
-        #     else:
-        #         context['upvoted_this_post'] = False
+        context['total_downvotes'] = this_post.people_who_downvoted.count()
+        
+        if self.request.user.is_authenticated:
+            this_person_liked_it = this_post.people_who_upvoted.filter(user=self.request.user).count()
+            context['this_person_liked_it'] = this_person_liked_it
+        
         
         return context
 
@@ -117,12 +111,16 @@ class UserPosts(generic.ListView):
         return context
     
     
-def LikeView(request, pk):
+def UpvoteView(request, pk):
     # post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
     # post.upvotes.add(request.user)
     # request.user.profile.upvoted_posts.add(post)
     post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
     upvote, created = Upvote.objects.get_or_create(user=request.user, post=post)
+    if post.people_who_downvoted.filter(user=request.user).count() > 0:
+        for x in post.people_who_downvoted.filter(user=request.user):
+            x.delete()
+            
     if not created:
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={'pk': pk, 'username': post.user.username}))
@@ -130,6 +128,24 @@ def LikeView(request, pk):
         upvote.post = post
         upvote.user = request.user
         upvote.save()
+        return HttpResponseRedirect(reverse('posts:detail',
+                                            kwargs={'pk': pk, 'username': post.user.username}))
+
+def DownvoteView(request, pk):
+    post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
+    downvote, created = Downvote.objects.get_or_create(user=request.user, post=post)
+    # if post.people_who_upvoted.filter(user=self.request.user).exists():
+    if post.people_who_upvoted.filter(user=request.user).count() > 0:
+        for x in post.people_who_upvoted.filter(user=request.user):
+            x.delete()
+    
+    if not created:
+        return HttpResponseRedirect(reverse('posts:detail',
+                                            kwargs={'pk': pk, 'username': post.user.username}))
+    else:
+        downvote.post = post
+        downvote.user = request.user
+        downvote.save()
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={'pk': pk, 'username': post.user.username}))
 

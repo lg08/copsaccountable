@@ -1,78 +1,92 @@
 {% extends "posts/post_base.html" %}
 
 {% block post_content %}
+    
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1><strong>{{ post.title }}</strong></h1>
+        </div>
+    </div>
 
-
-<div class="jumbotron text-center">
     <div class="container">
-        <h1><strong>{{ post.title }}</strong></h1>
-    </div>
-</div>
-
-<div class="container">
-    
-    <div class="row justify-content-center">
         
-        <div class="col-12">
-            {% if post.video %}
-                <video width="900" height="400" controls>
-                    <source src="{{ post.video.url }}" type="video/mp4">
-                    <!-- <source src="movie.ogg" type="video/ogg"> -->
-                    Your browser does not support the video tag.
-                </video>
-            {% endif %}            
-        </div>
-
-        <div class="col-12">
-            <h3>Time Info:</h3>
-            <p>{{ post.time_information }}</p>
-        </div>
-        <div class="col-12">
-            <h3>Place Info:</h3>
-            <p>{{ post.location_information }}</p>
-        </div>
-        
-        <div class="col-12">
-            <h3>Message: </h3>
-            <p>{{ post.message }}</p>
-
+        <div class="row justify-content-center">
             
-        </div>
+            <div class="col-12">
+                {% if post.video %}
+                    <video width="900" height="400" controls>
+                        <source src="{{ post.video.url }}" type="video/mp4">
+                        <!-- <source src="movie.ogg" type="video/ogg"> -->
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}            
+            </div>
 
-        <br/><br/>
-        <hr>
-        <br/>
-
-        {% if user.is_authenticated %}
-            <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
-            </form>
-
-            <h2>likes: </h2>
-            <h3>{{ total_upvotes }}</h3>
-        {% else %}
+            <div class="col-12">
+                <h3>Time Info:</h3>
+                <p>{{ post.time_information }}</p>
+            </div>
+            <div class="col-12">
+                <h3>Place Info:</h3>
+                <p>{{ post.location_information }}</p>
+            </div>
             
-            <form action="{% url 'accounts:login' %}">
-                <button class="btn btn-primary">Upvote</button>
-            </form>
+            <div class="col-12">
+                <h3>Message: </h3>
+                <p>{{ post.message }}</p>
 
-            <h2>likes: </h2>
+                
+            </div>
+
+            <br/><br/>
+            <hr>
             <br/>
-            <h3>{{ total_upvotes }}</h3>
-            <br/>
-            <h3>please login to upvote this post!</h3>
-        {% endif %}
+            <p>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
+                    </form>
+
+                    <h2>upvotes: </h2>
+                    <h3>{{ total_upvotes }}</h3>
+
+                    <form action="{% url 'posts:downvote_post' pk=post.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">DownVote</button>
+                    </form>
+
+                    <h2>downvotes: </h2>
+                    <h3>{{ total_downvotes }}</h3>
+                {% else %}
+                    
+                    <form action="{% url 'accounts:login' %}">
+                        <button class="btn btn-primary">Upvote</button>
+                    </form>
+
+                    <h2>likes: </h2>
+                    <br/>
+                    <h2>{{ total_upvotes }}</h2>
+                    <br/>
+                    <h2>please login to upvote this post!</h2>
+                {% endif %}
+            </p>
+            
 
             
+        </div>
+        <p>
+            {% if this_person_liked_it >= 1 %}
+                <p1>you already upvoted this</p1>
+            {% else %}
+                <p>you have not upvoted this yet</p>
+            {% endif %}
+        </p>
     </div>
-    
-</div>
 
 
 
-
-<!-- </div> -->
+    <!-- </div> -->
 {% endblock %}
 
 <!-- seems to be done rn -->
