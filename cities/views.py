@@ -3,12 +3,17 @@ from django.contrib.auth.mixins import(
     LoginRequiredMixin,
     PermissionRequiredMixin
 )
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+
 from django.urls import reverse
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from django.views import generic
 from cities.models import City, State
 from . import models
+from . import views
 
 
 
@@ -40,3 +45,4 @@ class ListStates(generic.ListView):
 class SingleState(generic.DetailView):
     model = State
     template_name = 'cities/state_detail.html'
+

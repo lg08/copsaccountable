@@ -16,7 +16,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     # I'm testing this out
-    title = models.CharField(max_length=30, null=True, blank=True)
+    title = models.CharField(max_length=100, null=True, blank=True)
     
     message = models.TextField()
     message_html = models.TextField(editable=False)
@@ -28,6 +28,7 @@ class Post(models.Model):
     state = models.ForeignKey(State, null=True, blank=False, on_delete=models.CASCADE)
     city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
 
+    upvotes = models.ManyToManyField(User, related_name='blog_posts')
 
     def __str__(self):
         return self.title
@@ -39,10 +40,13 @@ class Post(models.Model):
     def get_absolute_url(self):
         # return reverse("posts:detail", kwargs={"username": self.user.username, "pk": self.pk})
         return reverse("posts:for_user", kwargs={"username": self.user.username})
+
+    def total_upvotes(self):
+        return self.upvotes.count()
     
     class Meta:
         ordering = ["-created_at"]
-        unique_together = ["user", "message"]
+        # unique_together = ["user", "message"]   # not sure what this did, but it didn't let me post two messages with the same title
 
 
 
@@ -51,3 +55,15 @@ class Post(models.Model):
 
         # like button
         # https://stackoverflow.com/questions/15407985/django-like-button/15408120
+
+
+class Upvote(models.Model):
+    user = models.ForeignKey(User, related_name='upvotes', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='people_who_upvoted', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} upvoted {}".format(self.user, self.post)
+
+class Downvote(models.Model):
+    user = models.ForeignKey(User, related_name='downvotes', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='people_who_downvoted', on_delete=models.CASCADE)
