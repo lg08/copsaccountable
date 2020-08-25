@@ -41,6 +41,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         # return reverse("posts:detail", kwargs={"username": self.user.username, "pk": self.pk})
         return reverse("posts:for_user", kwargs={"username": self.user.username})
+
+    def total_upvotes(self):
+        return self.upvotes.count()
     
     class Meta:
         ordering = ["-created_at"]

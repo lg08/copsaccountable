@@ -33,8 +33,9 @@
         </div>
         
         <div class="col-12">
-            <h3>Message:</h3>
+            <h3>Message: </h3>
             <p>{{ post.message }}</p>
+
             
         </div>
 
@@ -42,12 +43,25 @@
         <hr>
         <br/>
 
-        <form action="{% url 'posts:upvote_post' post.pk %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
-        </form>
-        
-        
+        {% if user.is_authenticated %}
+            <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
+            </form>
+
+            <h2>likes: </h2>
+            <h3>{{ total_upvotes }}</h3>
+        {% else %}
+            
+            <button class="btn btn-primary">Upvote</button>
+
+            <h2>likes: </h2>
+            <br/>
+            <h3>{{ total_upvotes }}</h3>
+            <br/>
+            <h3>please login to upvote this post!</h3>
+        {% endif %}
+            
     </div>
     
 </div>

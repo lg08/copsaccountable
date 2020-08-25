@@ -9,6 +9,6 @@ urlpatterns = [
     path("by/<username>/",views.UserPosts.as_view(),name="for_user"),
     path("by/<username>/<int:pk>/",views.PostDetail.as_view(),name="detail"),
     path("delete/<int:pk>/",views.DeletePost.as_view(),name="delete"),
-    
-    path('like/<int:pk>', views.LikeView, name='upvote_post'),
+
+    path('upvote/<int:pk>', views.LikeView, name='upvote_post'),
 ]

@@ -15,6 +15,7 @@ from braces.views import SelectRelatedMixin
 from . import forms
 from . import models
 from . import views
+from . import urls
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -36,6 +37,12 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
         return queryset.filter(
             user__username__iexact=self.kwargs.get("username")
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)  # general context data
+        this_post = get_object_or_404(models.Post, pk=self.kwargs['pk'])  # just gets the post we're currently on
+        context['total_upvotes'] = this_post.total_upvotes()
+        return context
 
 
 class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
@@ -93,8 +100,7 @@ class UserPosts(generic.ListView):
     
     
 def LikeView(request, pk):
-    post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
-    post.upvotes.add(request.user)
-    return HttpResponseRedirect(reverse('posts:detail',
-                                        kwargs={'pk': pk, 'username': request.user.username}))
-
+        post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
+        post.upvotes.add(request.user)
+        return HttpResponseRedirect(reverse('posts:detail',
+                                        kwargs={'pk': pk, 'username': post.user.username}))
