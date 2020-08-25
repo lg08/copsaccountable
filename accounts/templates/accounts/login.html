@@ -9,9 +9,11 @@
 	{% csrf_token %}
 	{% bootstrap_form form %}<!-- allows us to use bootstrap on this form to look a lot nicer -->
 
-	<input name="" type="submit" value="Log In" class ="btn btn-default" />
+	<input name="" type="submit" value="Log In" class ="btn btn-primary" />
 	
     </form>
+
+    <p>Don't have an account yet? Sign up <a href="{% url 'accounts:signup' %}">here!</a></p>
 </div>
 
 {% endblock %}

@@ -53,7 +53,9 @@
             <h3>{{ total_upvotes }}</h3>
         {% else %}
             
-            <button class="btn btn-primary">Upvote</button>
+            <form action="{% url 'accounts:login' %}">
+                <button class="btn btn-primary">Upvote</button>
+            </form>
 
             <h2>likes: </h2>
             <br/>
