@@ -76,10 +76,16 @@
             
         </div>
         <p>
-            {% if this_person_liked_it >= 1 %}
+            {% if this_person_upvoted_it >= 1 %}
                 <p1>you already upvoted this</p1>
             {% else %}
                 <p>you have not upvoted this yet</p>
+            {% endif %}
+
+            {% if this_person_downvoted_it >= 1 %}
+                <p1>you already downvoted this</p1>
+            {% else %}
+                <p>you have not downvoted this yet</p>
             {% endif %}
         </p>
     </div>

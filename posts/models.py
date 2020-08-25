@@ -62,8 +62,10 @@ class Upvote(models.Model):
     post = models.ForeignKey(Post, related_name='people_who_upvoted', on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{} upvoted {}".format(self.user, self.post)
+        return "{} upvoted '{}'".format(self.user, self.post)
 
 class Downvote(models.Model):
     user = models.ForeignKey(User, related_name='downvotes', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, related_name='people_who_downvoted', on_delete=models.CASCADE)
+    def __str__(self):
+        return "{} downvoted '{}'".format(self.user, self.post)

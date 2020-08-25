@@ -48,10 +48,10 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
         context['total_downvotes'] = this_post.people_who_downvoted.count()
         
         if self.request.user.is_authenticated:
-            this_person_liked_it = this_post.people_who_upvoted.filter(user=self.request.user).count()
-            context['this_person_liked_it'] = this_person_liked_it
-        
-        
+            this_person_upvoted_it = this_post.people_who_upvoted.filter(user=self.request.user).count()
+            context['this_person_upvoted_it'] = this_person_upvoted_it
+            this_person_downvoted_it = this_post.people_who_downvoted.filter(user=self.request.user).count()
+            context['this_person_downvoted_it'] = this_person_downvoted_it
         return context
 
         
