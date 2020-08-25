@@ -12,7 +12,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    upvoted_posts = models.ManyToManyField(Post, related_name='users_who_upvoted')
+    # upvoted_posts = models.ManyToManyField(Post, related_name='users_who_upvoted')
 
     def __str__(self):
         return self.user.username
@@ -27,6 +27,18 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

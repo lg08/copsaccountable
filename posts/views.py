@@ -6,6 +6,7 @@ from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from . import models
+from posts.models import Upvote
 from django.urls import reverse
 # from django.core.files.storage import FileSystemStorage
 
@@ -43,7 +44,7 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)  # general context data
         this_post = get_object_or_404(models.Post, pk=self.kwargs['pk'])  # just gets the post we're currently on
-        context['total_upvotes'] = this_post.total_upvotes()
+        context['total_upvotes'] = this_post.people_who_upvoted.count()
 
         # I'm working on this
         # this_boolean = User.profile.users.objects.filter(upvoted_posts__id=this_post.pk)
@@ -117,8 +118,18 @@ class UserPosts(generic.ListView):
     
     
 def LikeView(request, pk):
+    # post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
+    # post.upvotes.add(request.user)
+    # request.user.profile.upvoted_posts.add(post)
     post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
-    post.upvotes.add(request.user)
-    request.user.profile.upvoted_posts.add(post)
-    return HttpResponseRedirect(reverse('posts:detail',
-                                        kwargs={'pk': pk, 'username': post.user.username}))
+    upvote, created = Upvote.objects.get_or_create(user=request.user, post=post)
+    if not created:
+        return HttpResponseRedirect(reverse('posts:detail',
+                                            kwargs={'pk': pk, 'username': post.user.username}))
+    else:
+        upvote.post = post
+        upvote.user = request.user
+        upvote.save()
+        return HttpResponseRedirect(reverse('posts:detail',
+                                            kwargs={'pk': pk, 'username': post.user.username}))
+

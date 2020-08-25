@@ -55,3 +55,8 @@ class Post(models.Model):
 
         # like button
         # https://stackoverflow.com/questions/15407985/django-like-button/15408120
+
+
+class Upvote(models.Model):
+    user = models.ForeignKey(User, related_name='upvotes', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='people_who_upvoted', on_delete=models.CASCADE)
