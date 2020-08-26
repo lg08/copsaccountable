@@ -28,7 +28,7 @@ class Post(models.Model):
     state = models.ForeignKey(State, null=True, blank=False, on_delete=models.CASCADE)
     city = models.ForeignKey(City, related_name='posts', null=True, blank=False, on_delete=models.CASCADE)
 
-    upvotes = models.ManyToManyField(User, related_name='blog_posts')
+    # upvotes = models.ManyToManyField(User, related_name='blog_posts')
 
     def __str__(self):
         return self.title
@@ -56,6 +56,18 @@ class Post(models.Model):
         # like button
         # https://stackoverflow.com/questions/15407985/django-like-button/15408120
 
+        
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comments')
+    message = models.TextField(max_length=200)
+    created_at = models.DateTimeField(auto_now=True)
+
+    # class Meta:
+    #     ordering = ['created_at']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.message, self.name)
 
 class Upvote(models.Model):
     user = models.ForeignKey(User, related_name='upvotes', on_delete=models.CASCADE)
