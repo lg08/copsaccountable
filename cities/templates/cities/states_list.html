@@ -4,7 +4,7 @@
 
 {% block pre_city %}
     <div class="container">
-        <h1>Cities</h1>        
+        <h1>States</h1>        
     </div>
 {% endblock %}
 
@@ -20,10 +20,10 @@
                 <div class="col-12">
 
 
-                    <div class="list-group">
+                    <div class="list-group my-3">
                         {% for state in states_list %} <!--this is from the views.py, it automatically passes this list-->
                             <a href="{% url 'cities:state_detail' slug=state.slug %}"
-                               class ="list-group-item list-group-item-action flex-column align-items-start">
+                               class ="list-group-item list-group-item-action flex-column align-items-start my-1">
 
 
                                 <h3 class="mb-1">{{ state.name }}</h3>
