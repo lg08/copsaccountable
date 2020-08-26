@@ -20,3 +20,9 @@ class PostForm(forms.ModelForm):
 
 
             # seems to be done rn
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = models.Comment
+        fields = ('message', )

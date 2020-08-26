@@ -46,6 +46,8 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
         this_post = get_object_or_404(models.Post, pk=self.kwargs['pk'])  # just gets the post we're currently on
         context['total_upvotes'] = this_post.people_who_upvoted.count()
         context['total_downvotes'] = this_post.people_who_downvoted.count()
+
+        context['comment_form'] = forms.CommentForm()
         
         if self.request.user.is_authenticated:
             this_person_upvoted_it = this_post.people_who_upvoted.filter(user=self.request.user).count()
@@ -57,6 +59,18 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
         return context
 
         
+
+def create_comment(request, pk):
+    post = get_object_or_404(models.Post, pk=pk)
+    if request.method == 'POST':
+        comment_form = forms.CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.user = request.user
+            new_comment.save()
+    return HttpResponseRedirect(reverse('posts:detail',
+                                        kwargs={'pk': pk, 'username': post.user.username}))
 
 
 class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
@@ -75,7 +89,6 @@ class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
-
     # the success_url will be the get_absolute_url from models.py
 
 
@@ -132,7 +145,7 @@ class UserPage(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["post_user"] = self.post_user
         return context
-    
+
     
     
 def UpvoteView(request, pk):
@@ -158,7 +171,7 @@ def UpvoteView(request, pk):
 def DownvoteView(request, pk):
     post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
     downvote, created = Downvote.objects.get_or_create(user=request.user, post=post)
-    # if post.people_who_upvoted.filter(user=self.request.user).exists():
+    # deletes your previous upvote if you did this
     if post.people_who_upvoted.filter(user=request.user).count() > 0:
         for x in post.people_who_upvoted.filter(user=request.user):
             x.delete()

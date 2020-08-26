@@ -1,14 +1,18 @@
 {% extends "posts/post_base.html" %}
 
+{% block pre_post %}
+    {% load bootstrap4 %}
+{% endblock %}
+
 {% block post_content %}
 
-    <div class="container">
-
-        <!-- Post Title -->
-        <div class="jumbotron text-center">
             <div class="container">
-                <h1><strong>{{ post.title }}</strong></h1>
-            </div>
+
+                <!-- Post Title -->
+                <div class="jumbotron text-center">
+                    <div class="container">
+                        <h1><strong>{{ post.title }}</strong></h1>
+                    </div>
         </div>
 
 
@@ -93,13 +97,31 @@
 
 {% block post_post %}
 
+    {% for comment in post.post_comments.all %}
+        <p>{{ comment.message }}</p>
+        <p>by: {{ comment.user }}</p>
+    {% endfor %}
+
+    <p>  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button></p>
+    <!-- Comment Form -->
+    <form action="{% url 'posts:create_comment' pk=post.pk %}" method="POST" class="collapse multi-collapse">
+        {% bootstrap_form comment_form %}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    <!-- Post Delete button -->
     {% if current_user == post.user %}
         <form action="{% url 'posts:delete' pk=post.pk %}">
             {% csrf_token %}
             <button class="btn btn-warning">Delete</button>
         </form>
     {% else %}
-    <h2>You did not make this post</h2>
-{% endif %}
+        <h2>You did not make this post</h2>
+    {% endif %}
+
+
+
+    
 
 {% endblock %}
