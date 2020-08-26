@@ -13,20 +13,24 @@
 
 {% block city_content %}
 
-    <div class="col-12">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
 
-        {% if city.posts.count == 0 %}
-            <h2>No posts in this city yet! Please post one!</h2>
+                {% if city.posts.count == 0 %}
+                    <h2>No posts in this city yet! Please post one!</h2>
 
-            {% else %}
-                {% for post in city.posts.all %}
-                    {% include "posts/post_card.html" %}
-                {% endfor %}
-                
-            {% endif %}
+                {% else %}
+                    {% for post in city.posts.all %}
+                        {% include "posts/post_card.html" %}
+                    {% endfor %}
+                    
+                {% endif %}
 
 
+            </div>
         </div>
+    </div>
 
 
 {% endblock %}

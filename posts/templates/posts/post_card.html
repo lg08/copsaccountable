@@ -1,35 +1,46 @@
 
-<div class="row justify-content-center">
-    <div class="card mb-3 col-12 bg-light" <!-- style="max-width: 1000px;" -->
-        <div class="row no-gutters">
-            <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}" class="stretched-link"> </a> <!--cool stretched link thing-->
+<div class="card bg-light w-100 my-3">
+    <div class="row no-gutters">
+        <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}" class="stretched-link"> </a> <!--cool stretched link thing-->
 
-            <div class="col-4">
+        <div class="col-4">
 
-                {% if post.thumbnail %} <!--having this if somehow fixes the problem-->
-                    <img style="object-fit: conver;" src="{{ post.thumbnail.url }}" class="card-img" alt="this post has no video">
-                {% endif %}
-            </div>
-            <div class="col-8">
+            {% if post.thumbnail %} <!--having this if somehow fixes the problem-->
+                <img class="card-thumbnail" src="{{ post.thumbnail.url }}" class="card-img" alt="this post has no video">
+            {% endif %}
+        </div>
+        <div class="col-8">
 
-                <div class="card-body">
-                    <h5 class="card-title"><strong>{{ post.title }}</strong></h5>
-                    <p class="card-text">{{ post.message_html|safe }}</p>
-                    
-                    <p class="card-text"><small class="text-muted"><time class="time">created at:
-                        <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}">
-                            {{ post.created_at }}</a></time></small></p>
-                    <p>Location: {{ post.city }}, {{ post.state }}</p>
-
-                    <p>upvotes: {{ post.people_who_upvoted.count }} downvotes: {{ post.people_who_downvoted.count }}</p>
-                    <p>comments: {{ post.post_comments.count }}</p>
-                    <p class="card-text">post pk: {{ post.pk }}</p>
-
-                </div>    
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{ post.title }}</strong></h5>
+                <p class="card-text">{{ post.message_html|safe }}</p>
                 
+
+                <!-- <p class="card-text">post pk: {{ post.pk }}</p> -->
+
+            </div>
+
+            <div class="card-footer py-0">
+                <div class="row justify-content-between">
+                    <div class="col">
+                        <p>upvotes: {{ post.people_who_upvoted.count }} downvotes: {{ post.people_who_downvoted.count }}</p>
+                    </div>
+                    <div class="col">
+                        <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}">
+                            {{ post.created_at }}</a>
+                    </div>
+                    <div class="col">
+                        <p>comments: {{ post.post_comments.count }}</p>
+                    </div>
+                    <div class="col"><p>Location: {{ post.city }}, {{ post.state }}</p>
+                    </div>
+                </div>
+
+
             </div>
             
         </div>
+        
     </div>
 </div>
 

@@ -6,105 +6,120 @@
 
 {% block post_content %}
 
-            <div class="container">
 
-                <!-- Post Title -->
-                <div class="jumbotron text-center">
-                    <div class="container">
-                        <h1><strong>{{ post.title }}</strong></h1>
+
+
+    <div class="container">
+        <div class="card bg-light w-100">
+            <div class="card-header"><h2>{{ post.title }}</h2></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        {% if post.video %}
+                            <video width="100%"  controls>
+                                <source src="{{ post.video.url }}" type="video/mp4">
+                                <!-- <source src="movie.ogg" type="video/ogg"> -->
+                                Your browser does not support the video tag.
+                            </video>
+                        {% endif %}
                     </div>
+                    <div class="col-12">
+                        <h3>Time Info:</h3>
+                        <p>{{ post.time_information }}</p>
+                    </div>
+                    <div class="col-12">
+                        <h3>Place Info:</h3>
+                        <p>{{ post.location_information }}</p>
+                    </div>
+                    <div class="col-12">
+                        <h3>Message: </h3>
+                        <p>{{ post.message }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        {% if user.is_authenticated %}
+                            <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'accounts:login' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">DownVote</button>
+                            </form>
+                        {% endif %}
+                        <p>upvotes: {{ total_upvotes }}</p>
+                    </div>
+                    <div class="col">
+                        {% if user.is_authenticated %}
+                            <form action="{% url 'posts:downvote_post' pk=post.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">DownVote</button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'accounts:login' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">DownVote</button>
+                            </form>
+                        {% endif %}
+                        <p>downvotes: {{ total_downvotes }}</p>
+                    </div>
+                    <div class="col">
+                        {% if user.is_authenticated %}
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button>
+                        {% else %}
+                            <form action="{% url 'accounts:login' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Reply to Post</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                    {% if current_user == post.user %}
+                        <div class="col">
+
+                            <form action="{% url 'posts:delete' pk=post.pk %}">
+                                {% csrf_token %}
+                                <button class="btn btn-warning">Delete Post</button>
+                            </form>
+                        </div>
+
+                    {% endif %}
+                </div>
+                </div>
         </div>
-
-
-        <div class="row justify-content-center">
-            
-            <!-- Post Video -->
-            <div class="">
-                {% if post.video %}
-                    <video width="100%"  controls>
-                        <source src="{{ post.video.url }}" type="video/mp4">
-                        <!-- <source src="movie.ogg" type="video/ogg"> -->
-                        Your browser does not support the video tag.
-                    </video>
-                {% endif %}            
-            </div>
-
-            <!-- Post Details -->
-            <div class="col-12">
-                <h3>Time Info:</h3>
-                <p>{{ post.time_information }}</p>
-            </div>
-            <div class="col-12">
-                <h3>Place Info:</h3>
-                <p>{{ post.location_information }}</p>
-            </div>
-            <div class="col-12">
-                <h3>Message: </h3>
-                <p>{{ post.message }}</p>
-            </div>
-
-            <!-- Upvote/Downvoting Stuff -->
-            {% if user.is_authenticated %}
-                <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
-                </form>
-                
-                <h2>upvotes: </h2>
-                <h3>{{ total_upvotes }}</h3>
-
-                <form action="{% url 'posts:downvote_post' pk=post.pk %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">DownVote</button>
-                </form>
-
-                <h2>downvotes: </h2>
-                <h3>{{ total_downvotes }}</h3>
-
-                <p>  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button></div>
-
-                    <!-- Comment Form -->
-                    <p>
-                        <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=post.pk subcomment=0 %}" method="POST" class="collapse multi-collapse">
-                            {% bootstrap_form comment_form %}
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </p>
-
-            {% else %}
-                <form action="{% url 'accounts:login' %}">
-                    <button class="btn btn-primary">Upvote</button>
-                </form>
-
-                <h2>likes: </h2>
-                <br/>
-                <h2>{{ total_upvotes }}</h2>
-                <br/>
-                <h2>please login to upvote this post!</h2>
-            {% endif %}
-
-
-            
-        </div>
+        <!-- Comment Form -->
         <p>
-            {% if this_person_upvoted_it >= 1 %}
-                <!-- <p1>you already upvoted this</p1> -->
-            {% else %}
-                <!-- <p>you have not upvoted this yet</p> -->
-            {% endif %}
+            <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=post.pk subcomment=0 %}" method="POST" class="collapse multi-collapse">
+                {% bootstrap_form comment_form %}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </p>                        
+    </div>                      <!--container-->
+    
+    
+    
+    
 
-            {% if this_person_downvoted_it >= 1 %}
-                <!-- <p1>you already downvoted this</p1> -->
-            {% else %}
-                <!-- <p>you have not downvoted this yet</p> -->
-            {% endif %}
-        </p>
-    </div>
+    <p>
+        {% if this_person_upvoted_it >= 1 %}
+            <!-- <p1>you already upvoted this</p1> -->
+        {% else %}
+            <!-- <p>you have not upvoted this yet</p> -->
+        {% endif %}
+
+        {% if this_person_downvoted_it >= 1 %}
+            <!-- <p1>you already downvoted this</p1> -->
+        {% else %}
+            <!-- <p>you have not downvoted this yet</p> -->
+        {% endif %}
+    </p>
 
 
 
-    <!-- </div> -->
 {% endblock %}
 
 {% block post_post %}
@@ -143,14 +158,7 @@
 
     
     <!-- Post Delete button -->
-    {% if current_user == post.user %}
-        <form action="{% url 'posts:delete' pk=post.pk %}">
-            {% csrf_token %}
-            <button class="btn btn-warning">Delete Post</button>
-        </form>
-    {% else %}
-        <h2>You did not make this post</h2>
-    {% endif %}
+
 
 
 
