@@ -14,5 +14,5 @@ urlpatterns = [
     path('downvote/<int:pk>', views.DownvoteView, name='downvote_post'),
     path('profile/of/<username>/', views.UserPage.as_view(), name='user_page'),
 
-    path('create/comment/on/<int:pk>/', views.create_comment, name='create_comment'),
+    path('create/comment/<int:subcomment>/on/<int:postpk>/<int:commentpk>/', views.create_comment, name='create_comment'),
 ]

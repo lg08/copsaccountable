@@ -58,20 +58,20 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
             context['current_user'] = self.request.user
         return context
 
-        
 
-def create_comment(request, pk):
-    post = get_object_or_404(models.Post, pk=pk)
+def create_comment(request, postpk, commentpk, subcomment):
+    post = get_object_or_404(models.Post, pk=postpk)
     if request.method == 'POST':
         comment_form = forms.CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
+            if subcomment == 1:  # it's a subcomment
+                new_comment.comment = get_object_or_404(models.Comment, pk=commentpk)
             new_comment.post = post
             new_comment.user = request.user
             new_comment.save()
     return HttpResponseRedirect(reverse('posts:detail',
-                                        kwargs={'pk': pk, 'username': post.user.username}))
-
+                                        kwargs={'pk': postpk, 'username': post.user.username}))
 
 class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
     form_class = forms.PostForm

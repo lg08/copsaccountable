@@ -2,19 +2,25 @@
 {% load bootstrap4 %}
 
 {% block post_content %}
-    <h4>Create New Post</h4>
-    <form method="POST" action="{% url 'posts:create' %}" id="PostForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-        <button type="submit" class="btn btn-primary btn-large">Post</button>
+    <div class="container">
+
+        <h4>Create New Post</h4>
+        <form method="POST" action="{% url 'posts:create' %}" id="PostForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary btn-large">Post</button>
         {% endbuttons %}
-    </form>
+        </form>
 
 
-    <!-- End of baic form -->
+        <!-- End of basic form -->
+        
+        
+        
+    </div>
     
-
+    
     <!-- testing stuff from here: https://jsfiddle.net/patelriki13/m1ezs70o/ -->
     <form name="myform" id="myForm">
         <select id="countySel" size="1">
@@ -38,7 +44,6 @@
         </select>
     </form>
 
-    <!-- <script type="text/javascript" src="{% static 'js/post_form.js' %}"></script> -->
 
     <script>
      var countryStateInfo = {

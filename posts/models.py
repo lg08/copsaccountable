@@ -58,13 +58,14 @@ class Post(models.Model):
 
         
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', blank=True, null=True)
+    comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='comment_comments', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comments')
     message = models.TextField(max_length=200)
     created_at = models.DateTimeField(auto_now=True)
 
-    # class Meta:
-    #     ordering = ['created_at']
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.message, self.name)

@@ -1,30 +1,42 @@
 {% extends "cities/cities_base.html" %}
 
+
+{% block pre_city %}
+    <div class="container">
+        <h1>Cities</h1>        
+    </div>
+{% endblock %}
+
+
 {% block city_content %}
 
 
     <div class="container">
-        <div class="col-12">
+        
+        <div class="row">
+            <div class="col-12">
 
-            <div class="list-group">
-                {% for city in state.cities.all %} <!--this is from the views.py, it automatically passes this list-->
-                    <a href="{% url 'cities:single' slug=city.slug %}"
-                       class ="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="list-group my-3">
 
-
-                        <h3 class="mb-1">{{ city.name }}</h3>
-                        <div class="d-flex w-40 justify-content-between">
-                            <small class="text-muted"><span class="badge badge-secondary">
-                                {{ city.posts.count }}</span> post{{ city.posts.count|pluralize }}</small>
-                            <span></span><span></span>
-                        </div>
+                    {% for city in state.cities.all %} <!--this is from the views.py, it automatically passes this list-->
+                        <a href="{% url 'cities:single' slug=city.slug %}"
+                           class ="list-group-item list-group-item-action flex-column align-items-start my-1">
 
 
-                    </a>
+                            <h3 class="mb-1">{{ city.name }}</h3>
+                            <div class="d-flex w-40 justify-content-between">
+                                <small class="text-muted"><span class="badge badge-secondary">
+                                    {{ city.posts.count }}</span> post{{ city.posts.count|pluralize }}</small>
+                                <span></span><span></span>
+                            </div>
 
-                {% endfor %}
-            </div>        
-            
+
+                        </a>
+
+                    {% endfor %}
+                </div>        
+                
+            </div>
         </div>
     </div>
 

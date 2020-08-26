@@ -13,6 +13,9 @@
 
         {% endblock %}
 
+        <!-- loads my custom css -->
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">
+
     </head>
     <body>
 
@@ -23,8 +26,19 @@
         {% block body %}
 
         {% endblock %}
-
         
+        <footer class="blog-footer">
+            <!-- <footer class="blog-footer mt-auto py-3"> -->
+            <p>Have any questions? Please send them to lgen@princeton.edu!</p>
+            <p>This website created by PUMS '23</p>
+        </footer>
+
+        <!-- <footer class="footer mt-auto py-3">
+             <div class="container">
+             <span class="text-muted">Place sticky footer content here.</span>
+             </div>
+             </footer> -->
+
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
