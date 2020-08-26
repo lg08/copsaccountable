@@ -11,5 +11,5 @@ class UserCreateForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].label = "Public Display Name"  # this just sets the label for the fields on the form
+        self.fields['username'].label = "Public Username"  # this just sets the label for the fields on the form
         self.fields['email'].label = "Email Address"

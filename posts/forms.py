@@ -10,13 +10,13 @@ class PostForm(forms.ModelForm):
 
 
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        super().__init__(*args, **kwargs)
-        if user is not None:
-            self.fields["city"].queryset = (
-                models.City.objects.filter(pk__in=user.cities.values_list("city__pk"))
-            )
+    # def __init__(self, *args, **kwargs):
+    #     user = kwargs.pop("user", None)
+    #     super().__init__(*args, **kwargs)
+    #     if user is not None:
+    #         self.fields["city"].queryset = (
+    #             models.City.objects.filter(pk__in=user.cities.values_list("city__pk"))
+    #         )
 
 
             # seems to be done rn

@@ -131,8 +131,8 @@ STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]  # tells django where to go
 
 
 # these tell the built in views where to go after logging in and out
-LOGIN_REDIRECT_URL = 'test'
-LOGOUT_REDIRECT_URL = 'thanks'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 
 # tells django where to store media files locally

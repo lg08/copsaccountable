@@ -20,7 +20,7 @@
 
             {% else %}
                 {% for post in city.posts.all %}
-                    {% include "posts/_post.html" %}
+                    {% include "posts/post_card.html" %}
                 {% endfor %}
                 
             {% endif %}

@@ -3,26 +3,26 @@
 {% block pre_city %}
 
 
-<!-- <div class="col-md-4"> -->
+    <div class="col-md-4">
 
-<!--     <div class="content"> -->
+        <div class="content">
 
-<!--         {% if user.is_authenticated %} -->
+            {% if user.is_authenticated %}
 
-<!--         <h2>Welcome back -->
-<!--             <a href="{% url 'posts:for_user' username=user.username %}">@{{user.username }}</a> -->
-<!--         </h2> -->
+                <h2>Welcome back
+                    <a href="{% url 'posts:for_user' username=user.username %}">@{{user.username }}</a>
+                </h2>
 
-<!--         {% else %} -->
+            {% else %}
 
-<!--         {% endif %} -->
+            {% endif %}
 
-<!--         <h2>Cities List</h2> -->
+            <h2>Cities List</h2>
 
 
-<!--     </div> -->
+        </div>
 
-<!-- </div> -->
+    </div>
 
 
 {% endblock %}

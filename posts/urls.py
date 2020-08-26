@@ -12,4 +12,5 @@ urlpatterns = [
 
     path('upvote/<int:pk>', views.UpvoteView, name='upvote_post'),
     path('downvote/<int:pk>', views.DownvoteView, name='downvote_post'),
+    path('profile/of/<username>/', views.UserPage.as_view(), name='user_page'),
 ]
