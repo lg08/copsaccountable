@@ -3,45 +3,45 @@
     <div class="row no-gutters">
         <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}" class="stretched-link"> </a> <!--cool stretched link thing-->
 
-        <div class="col-4">
+        <div class="col-4 my-card-thumbnail-container">     <!--card thumbnail-->
 
-            {% if post.thumbnail %} <!--having this if somehow fixes the problem-->
-                <img class="card-thumbnail" src="{{ post.thumbnail.url }}" class="card-img" alt="this post has no video">
+            {% if post.thumbnail %}
+                <img src="{{ post.thumbnail.url }}" class="my-card-thumbnail"
+                     alt="this post has no video">
             {% endif %}
         </div>
-        <div class="col-8">
-
-            <div class="card-body">
-                <h5 class="card-title"><strong>{{ post.title }}</strong></h5>
-                <p class="card-text">{{ post.message_html|safe }}</p>
-                
-
-                <!-- <p class="card-text">post pk: {{ post.pk }}</p> -->
-
-            </div>
-
-            <div class="card-footer py-0">
-                <div class="row justify-content-between">
-                    <div class="col">
-                        <p>upvotes: {{ post.people_who_upvoted.count }} downvotes: {{ post.people_who_downvoted.count }}</p>
-                    </div>
-                    <div class="col">
-                        <a href="{% url 'posts:detail' username=post.user.username pk=post.pk %}">
-                            {{ post.created_at }}</a>
-                    </div>
-                    <div class="col">
-                        <p>comments: {{ post.post_comments.count }}</p>
-                    </div>
-                    <div class="col"><p>Location: {{ post.city }}, {{ post.state }}</p>
-                    </div>
+        <div class="col-8">     <!--body of card-->
+            <div class="row align-items-start">
+                <div class="col-12">
+                    <h5 class="my-0 py-0"><strong>{{ post.title }}</strong></h5>
                 </div>
-
-
+                <div class="col-12">
+                    <p class="my-0 py-0">{{ post.message_html|safe }}</p>
+                </div>
             </div>
-            
+            <div class="row align-items-end">
+                <div class="col-12 my-card-footer"> <!--card footnote-->
+                    <div class="row no-gutters align-items-end">
+                        <div class="col my-0 py-0">
+                            <p>upvotes: {{ post.people_who_upvoted.count }} downvotes:
+                                {{ post.people_who_downvoted.count }}</p>
+                        </div>
+                        <div class="col">
+                            <a class="my-0 py-0" href="{% url 'posts:detail' username=post.user.username pk=post.pk %}">
+                                {{ post.created_at }}</a>
+                        </div>
+                        <div class="col">
+                            <p class="my-0 py-0">comments: {{ post.post_comments.count }}</p>
+                        </div>
+                        <div class="col my-0 py-0"><p>Location: {{ post.city }}, {{ post.state }}</p>
+                        </div>
+                    </div>  
+                </div>
+            </div>    
         </div>
         
-    </div>
+        
+        </div>
 </div>
 
 
