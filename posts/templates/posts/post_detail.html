@@ -96,13 +96,27 @@
 {% endblock %}
 
 {% block post_post %}
+    <div class="container">
+        <h1>Comments:</h1>
+        {% for comment in post.post_comments.all %}
+            <div class="card">
+                <div class="card-body">
+                    <!-- <h5 class="card-title">Card title</h5> -->
+                    <p class="card-text">{{ comment.message }}</p>
+                    <p class="card-text">by: {{ comment.user }}</p>
+                    <p>
+                        <time class="card-text">at: {{ comment.created_at }}</time>
+                    </p>
+                    <a href="#" class="btn btn-secondary">Reply</a>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
 
-    {% for comment in post.post_comments.all %}
-        <p>{{ comment.message }}</p>
-        <p>by: {{ comment.user }}</p>
-    {% endfor %}
+    
+    
 
-    <p>  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button></p>
+    <p>  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button></p>
     <!-- Comment Form -->
     <form action="{% url 'posts:create_comment' pk=post.pk %}" method="POST" class="collapse multi-collapse">
         {% bootstrap_form comment_form %}
