@@ -19,9 +19,9 @@
         <div class="row justify-content-center">
             
             <!-- Post Video -->
-            <div class="col-12">
+            <div class="">
                 {% if post.video %}
-                    <video width="900" height="400" controls>
+                    <video width="100%"  controls>
                         <source src="{{ post.video.url }}" type="video/mp4">
                         <!-- <source src="movie.ogg" type="video/ogg"> -->
                         Your browser does not support the video tag.
@@ -60,6 +60,18 @@
 
                 <h2>downvotes: </h2>
                 <h3>{{ total_downvotes }}</h3>
+
+                <p>  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button></div>
+
+                    <!-- Comment Form -->
+                    <p>
+                        <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=post.pk subcomment=0 %}" method="POST" class="collapse multi-collapse">
+                            {% bootstrap_form comment_form %}
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </p>
+
             {% else %}
                 <form action="{% url 'accounts:login' %}">
                     <button class="btn btn-primary">Upvote</button>
@@ -77,15 +89,15 @@
         </div>
         <p>
             {% if this_person_upvoted_it >= 1 %}
-                <p1>you already upvoted this</p1>
+                <!-- <p1>you already upvoted this</p1> -->
             {% else %}
-                <p>you have not upvoted this yet</p>
+                <!-- <p>you have not upvoted this yet</p> -->
             {% endif %}
 
             {% if this_person_downvoted_it >= 1 %}
-                <p1>you already downvoted this</p1>
+                <!-- <p1>you already downvoted this</p1> -->
             {% else %}
-                <p>you have not downvoted this yet</p>
+                <!-- <p>you have not downvoted this yet</p> -->
             {% endif %}
         </p>
     </div>
@@ -96,39 +108,45 @@
 {% endblock %}
 
 {% block post_post %}
+
+    <!-- Comments -->
+    
     <div class="container">
         <h1>Comments:</h1>
+
         {% for comment in post.post_comments.all %}
-            <div class="card">
-                <div class="card-body">
-                    <!-- <h5 class="card-title">Card title</h5> -->
-                    <p class="card-text">{{ comment.message }}</p>
-                    <p class="card-text">by: {{ comment.user }}</p>
-                    <p>
-                        <time class="card-text">at: {{ comment.created_at }}</time>
-                    </p>
-                    <a href="#" class="btn btn-secondary">Reply</a>
+
+            {% if comment.comment %} <!--if the comment is a subcomment-->
+            {% else %}
+                <!-- loops through all comments -->
+                <div class="media border-left border-dark rounded my-3 px-3">
+                    <div class="media-body">
+                        <p>{{ comment.message }}</p>
+                        <p>by: {{ comment.user }}</p>
+                        <p>
+                            <time class="card-text">at: {{ comment.created_at }}</time>
+                        </p>
+
+                        <!-- displays the second-level subcomments -->
+                        {% for subcomment in comment.comment_comments.all %}
+                            {% include 'posts/comment.html' %}
+                        {% endfor %}
+                        
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+            {% endif %}
+            
+        {% endfor %}
+
     </div>
 
-    
-    
 
-    <p>  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button></p>
-    <!-- Comment Form -->
-    <form action="{% url 'posts:create_comment' pk=post.pk %}" method="POST" class="collapse multi-collapse">
-        {% bootstrap_form comment_form %}
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
     
     <!-- Post Delete button -->
     {% if current_user == post.user %}
         <form action="{% url 'posts:delete' pk=post.pk %}">
             {% csrf_token %}
-            <button class="btn btn-warning">Delete</button>
+            <button class="btn btn-warning">Delete Post</button>
         </form>
     {% else %}
         <h2>You did not make this post</h2>

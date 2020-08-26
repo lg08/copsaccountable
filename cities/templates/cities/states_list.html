@@ -1,33 +1,46 @@
 {% extends 'cities/cities_base.html' %}
 
+
+
+{% block pre_city %}
+    <div class="container">
+        <h1>Cities</h1>        
+    </div>
+{% endblock %}
+
+
 {% block city_content %}
 
     
-<div class="container">
+        <div class="container">
 
-    
-    
-    <div class="col-12">
-
-
-        <div class="list-group">
-            {% for state in states_list %} <!--this is from the views.py, it automatically passes this list-->
-                <a href="{% url 'cities:state_detail' slug=state.slug %}"
-                   class ="list-group-item list-group-item-action flex-column align-items-start">
+            
+            
+            <div class="row">
+                <div class="col-12">
 
 
-                    <h3 class="mb-1">{{ state.name }}</h3>
-                
+                    <div class="list-group">
+                        {% for state in states_list %} <!--this is from the views.py, it automatically passes this list-->
+                            <a href="{% url 'cities:state_detail' slug=state.slug %}"
+                               class ="list-group-item list-group-item-action flex-column align-items-start">
 
+
+                                <h3 class="mb-1">{{ state.name }}</h3>
+                                
+
+                                
+                            </a>
+
+                        {% endfor %}
+                    </div>
                     
-                </a>
 
-            {% endfor %}
+                </div>
+            </div>
+            
+
         </div>
-        
-
-    </div>
-</div>
 
 
 {% endblock %}

@@ -1,38 +1,26 @@
 {% extends 'base.html' %}
 
-
-
 {% block page_title %}
-<title>Home</title>
+    <title>Home</title>
 {% endblock %}
 
 
 
 {% block body %}
-<div style="background-color:white;">
-
-    
-    <!-- Jumbotron -->
-    <!-- <div class="jumbotron text-center">
-         <div class="container">
-         <h1>Welcome to CopsAccountable.com!</h1>
-         <p><em>A site designed to encourage community oversight of and involvement with the police</em></p>
-         </div>	    
-         </div> -->
-
-    <!-- <div class="position-relative <!-- <!-- overflow-hidden --> <!-- p-3 p-md-5 m-md-3 --> <!-- text-center bg-light" -->
-    <div class="position-relative text-center">
-        <!-- <div class="col-md-5 p-lg-5 mx-auto my-5"> -->
-        <h1 class="display-4 font-weight-normal"><strong>Welcome to CopsAccountable</strong></h1>
-        <p class=""lead font-weight-normal">A site designed to encourage community oversight of and involvement with the police.</p>
-        <a class="btn btn-outline-secondary" href="{% url 'cities:all' %}
-                  ">Cities</a>
-        <!-- </div> -->
-        <div class="product-device shadow-sm d-none d-md-block"></div>
-        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-    </div>
-
     <div class="container">
+
+        <!-- Header -->
+        <div class="position-relative text-center">
+            <!-- <div class="col-md-5 p-lg-5 mx-auto my-5"> -->
+            <h1 class="display-4 font-weight-normal"><strong>Welcome to CopsAccountable</strong></h1>
+            <p class=""lead font-weight-normal">A site designed to encourage community oversight of and involvement with the police.</p>
+            <a class="btn btn-outline-secondary" href="{% url 'cities:all' %}
+                      ">Cities</a>
+            <!-- </div> -->
+            <div class="product-device shadow-sm d-none d-md-block"></div>
+            <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+        </div>
+
         
         <h2>The Situation Today: </h2>
         <p>With everything that's been going on in the world recently, it's become more clear than ever that changes in the way the police conduct their business need to happen. We've all witnessed the savage murders of people like George Floyd, Eric Garner, Michael Brown, Tamir Rice, Walter Scott, Alton Sterling, and so many more. If there's one thing we can learn from these videos, it's that the police have proven themselves incapable of properly holding their officers accountable for the actions they commit while on the job, so it falls on us, the people to do so.</p>
@@ -43,10 +31,9 @@
         <p>Right now, more and more people are filming their own and others’ interactions with the police. However, what do they do with this video? They can post their interaction on social media, but it’s all too likely to be drowned out by all the dumb stuff people like to post everyday. Because of this, very few videos ever make it to the light, and the ones that do are usually the worst of the worst, like George Floyd. Cops are protected by this. This app/website will provide a dedicated place for people to make public their interactions with the police. Right now, even if someone has an incriminating video of a police officer, unless it’s as bad as George Floyd, very few people see the video and so there is very limited pressure on the police department to take any action. With this website/app, interactions will no longer be hidden by the overwhelming information on the web, and the general public can post and look up all the best and worst interactions with the police in their area, and the country. When videos of cops breaking the law are posted, users will be encouraged to share the video and provide social pressure for the police department to make changes. The entire purpose of this site is to make videos involving police interactions as public and easy to find as possible, putting pressure on the police to stay strictly within the confines of the law. This site could also be helpful in changing police policies, if certain videos of police officers performing legal actions are disliked and spread around enough. </p>    
 
     </div>
-
+    
 
     
-</div>
 
 
 {% endblock %}
