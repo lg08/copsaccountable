@@ -148,7 +148,14 @@
                                 </div>    
                             </div>
                             <div class="col">
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button>
+                                {% if user.is_authenticated %}
+                                    <button class="btn btn-light" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button>
+                                {% else %}
+                                    <form action="{% url 'accounts:login' %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-light">Reply to Post</button>
+                                    </form>
+                                {% endif %}
                             </div>
                         </div>
                         
@@ -163,7 +170,7 @@
                 
             {% endif %}
             <p> <!--individual comment forms-->
-                <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=post.pk subcomment=0 %}" method="POST" class="collapse form-collapse-{{ comment.pk }}">
+                <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=comment.pk subcomment=1 %}" method="POST" class="collapse form-collapse-{{ comment.pk }}">
                     {% bootstrap_form comment_form %}
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Submit</button>
