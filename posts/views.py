@@ -48,6 +48,10 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
         context['total_downvotes'] = this_post.people_who_downvoted.count()
 
         context['comment_form'] = forms.CommentForm()
+
+
+        # trying to get recursive comments
+        
         
         if self.request.user.is_authenticated:
             this_person_upvoted_it = this_post.people_who_upvoted.filter(user=self.request.user).count()

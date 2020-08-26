@@ -1,9 +1,48 @@
-<div class="media ml-5 border-left border-dark rounded my-3 px-3">
+{% load bootstrap4 %}
+<div class="media border-left border-dark rounded my-3 px-3">
     <div class="media-body">
-        <p>{{ subcomment.message }}</p>
-        <p>by: {{ subcomment.user }}</p>
-        <p>
-            <time class="card-text">at: {{ subcomment.created_at }}</time>
-        </p>
+        <div class="row">
+            <div class="col"> <!--left half-->
+                <div class="col-12">
+                    <p>{{ comment.message }}</p>                                
+                </div>
+                <div class="col-12">
+                    <p>by: {{ comment.user }}</p>                                
+                </div>
+                <div class="col-12">
+                    <p>
+                        <time class="card-text">at: {{ comment.created_at }}</time>
+                    </p>        
+                </div>    
+            </div>
+
+            
+            <div class="col"> <!--right half-->
+                {% if user.is_authenticated %}
+                    <button class="btn btn-light" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button>
+                {% else %}
+                    <form action="{% url 'accounts:login' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-light">Reply to Post</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        <p> <!--individual comment forms-->
+            <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=comment.pk subcomment=1 %}" method="POST" class="collapse form-collapse-{{ comment.pk }}">
+                {% bootstrap_form comment_form %}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </p>                                        
+        
+
+        <!-- displays the second-level subcomments -->
+        {% if comment.comment_comments %}
+            {% for subcomment in comment.comment_comments.all %}
+            {% include 'posts/comment.html' %}
+            {% endfor %}
+        {% endif %}
+        
     </div>
 </div>
