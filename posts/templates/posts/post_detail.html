@@ -9,8 +9,8 @@
 
     <div class="container">
         <div class="card bg-light w-100 mt-3">
-            <div class="card-header"><h2>{{ post.title }}</h2></div>
-            <div class="card-body">
+            <div class="card-header my-dark-grey-background"><h2>{{ post.title }}</h2></div>
+            <div class="card-body my-dark-grey-background">
                 <div class="row">
                     <div class="col-12">
                         {% if post.video %}
@@ -22,20 +22,20 @@
                         {% endif %}
                     </div>
                     <div class="col-12">
-                        <h3>Message: </h3>
+                        <h4>Message: </h4>
                         <p>{{ post.message }}</p>
                     </div>
                     <div class="col-12">
-                        <h3>Time Info:</h3>
+                        <h5>Time Info:</h5>
                         <p>{{ post.time_information }}</p>
                     </div>
                     <div class="col-12">
-                        <h3>Place Info:</h3>
+                        <h5>Place Info:</h5>
                         <p>{{ post.location_information }}</p>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer my-dark-grey-background">
                 <div class="row justify-content-center">
                     <div class="col">
                         {% if user.is_authenticated %}
@@ -121,25 +121,13 @@
 {% endblock %}
 
 {% block post_post %}
-
-    <!-- Comments -->
-    
     <div class="container">
-        
-        
         <h1>Comments:</h1>
-
-
         <!-- recursive comment revealing -->
         {% create_stack post.post_comments.all as commentstack %}
         {% create_stack post.post_comments.all as commentstackcopy %}
         {% for number in  commentstackcopy %}
             {% include 'posts/comment.html' %}
         {% endfor %}
-            
-
     </div>
-
-
-
 {% endblock %}

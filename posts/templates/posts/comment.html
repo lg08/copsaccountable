@@ -13,7 +13,7 @@
                 </div>
                 <div class="col"> <!--right column-->
                     {% if user.is_authenticated %} <!--toggles comment form-->
-                        <button class="btn btn-light" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Comment</button>
+                        <button class="btn btn-link btn-sm text-muted" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Comment</button>
                     {% else %} <!--just redirects to login page-->
                         <form action="{% url 'accounts:login' %}" method="POST">
                             {% csrf_token %}

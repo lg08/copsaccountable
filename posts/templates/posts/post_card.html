@@ -6,12 +6,13 @@
         <div class="col-4 my-card-thumbnail-container">     <!--card thumbnail-->
 
             {% if post.thumbnail %}
-                <img src="{{ post.thumbnail.url }}" class="my-card-thumbnail"
+                <img src="{{ post.thumbnail.url }}" class="img-thumbnail"
                      alt="this post has no video">
             {% endif %}
         </div>
-        <div class="col-8">     <!--body of card-->
-            <div class="row align-items-start">
+        <div class="col-8 my-dark-grey-background">     <!--body of card-->
+            
+            <div class="row"> <!--card title/message-->
                 <div class="col-12">
                     <h5 class="my-0 py-0"><strong>{{ post.title }}</strong></h5>
                 </div>
@@ -19,12 +20,12 @@
                     <p class="my-0 py-0">{{ post.message_html|safe }}</p>
                 </div>
             </div>
-            <div class="row align-items-end">
-                <div class="col-12 my-card-footer"> <!--card footnote-->
+            
+            <div class="row align-items-end no-gutters">   <!--card footnote-->
+                <div class="col-12 my-card-footer align-self-end">
                     <div class="row no-gutters align-items-end">
-                        <div class="col my-0 py-0">
-                            <p>upvotes: {{ post.people_who_upvoted.count }} downvotes:
-                                {{ post.people_who_downvoted.count }}</p>
+                        <div class="col align-self-end">
+                            <p class=""><i class="arrow up"></i class="py-0 my-0">  {{ post.people_who_upvoted.count }} <i class="arrow down"></i>  {{ post.people_who_downvoted.count }}</p>
                         </div>
                         <div class="col">
                             <a class="my-0 py-0" href="{% url 'posts:detail' username=post.user.username pk=post.pk %}">
@@ -33,11 +34,13 @@
                         <div class="col">
                             <p class="my-0 py-0">comments: {{ post.post_comments.count }}</p>
                         </div>
-                        <div class="col my-0 py-0"><p>Location: {{ post.city }}, {{ post.state }}</p>
+                        <div class="col ">
+                            <p class="py-0 my-0">{{ post.city }}, {{ post.state }}</p>
                         </div>
                     </div>  
                 </div>
-            </div>    
+            </div>
+            
         </div>
         
         

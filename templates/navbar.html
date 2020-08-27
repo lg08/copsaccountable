@@ -1,8 +1,8 @@
 <!-- navbar -->
 <div class="">
-    <nav class="navbar navbar-expand-sm navbar-dark <!-- bg-dark -->" <!-- style="background-color: darkgrey" -->>
+    <nav class="navbar navbar-expand-sm navbar-color">
 
-        <a class="navbar-brand" href="{% url 'home' %}">CopsAccountable</a>
+        <a class="navbar-brand purple-text" href="{% url 'home' %}"><strong>C.A.</strong></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,8 +10,8 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav nav">
-                <a class="nav-item nav-link active" href="{% url 'about' %}">About<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link active" href="{% url 'cities:list_states' %}">States<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link text-dark" href="{% url 'about' %}">About<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link text-dark" href="{% url 'cities:list_states' %}">States<span class="sr-only">(current)</span></a>
             </div>
 
         </div>
