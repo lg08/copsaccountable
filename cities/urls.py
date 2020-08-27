@@ -10,7 +10,7 @@ urlpatterns = [
     path('cities/in/<slug>/', views.SingleState.as_view(), name='state_detail'),
 
     path('create/all/states/', views.make_all_states, name='make_all_states'),
-    path('create/cities/', views.make_arizona_cities, name='make_arizona_cities'),
+    path('create/cities/', views.make_georgia_cities, name='make_georgia_cities'),
 ]
 
 
