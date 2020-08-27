@@ -46,7 +46,7 @@
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">DownVote</button>
+                                <button type="submit" class="btn btn-primary">UpVote</button>
                             </form>
                         {% endif %}
                         <p>upvotes: {{ total_upvotes }}</p>
