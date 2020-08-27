@@ -64,11 +64,15 @@ class Comment(models.Model):
     message = models.TextField(max_length=200)
     created_at = models.DateTimeField(auto_now=True)
 
+    # def __init__(self, name, model):
+        # self.name = name
+        # super().__init__(name, model)
+        
     class Meta:
         ordering = ['-created_at']
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.message, self.name)
+        return 'Comment {} by {}'.format(self.message, self.user)
 
 class Upvote(models.Model):
     user = models.ForeignKey(User, related_name='upvotes', on_delete=models.CASCADE)
