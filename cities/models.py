@@ -38,8 +38,10 @@ class State(models.Model):
 
 
 class City(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(allow_unicode=True, unique=True)
+    name = models.CharField(max_length=255, # unique=True
+                            )
+    slug = models.SlugField(allow_unicode=True, # unique=True
+                            )
     state = models.ForeignKey(State, related_name="cities", on_delete=models.CASCADE, default=1)
 
     def __str__(self):
