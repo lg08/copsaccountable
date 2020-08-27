@@ -72,7 +72,7 @@ class Comment(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.message, self.user)
+        return "{} commented '{}'".format(self.user, self.message)
 
 class Upvote(models.Model):
     user = models.ForeignKey(User, related_name='upvotes', on_delete=models.CASCADE)

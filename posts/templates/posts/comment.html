@@ -29,12 +29,16 @@
                 </p>                
             </div>
         </div>      <!--row-->
+        {{ commentstack }}
+
         <!-- adds all subcomments to stack -->
         {% if comment.comment_comments %}
             {% for subcomment in comment.comment_comments.all %}
                 {% push_item_onto_stack commentstack subcomment %}
                 {% include 'posts/comment.html' %}
             {% endfor %}
+        {% else %}
+            <h2>this has no more subcoomments</h2>
         {% endif %}
 
     </div>          <!--media body-->
