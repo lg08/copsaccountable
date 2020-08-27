@@ -9,7 +9,8 @@ urlpatterns = [
     path('states/', views.ListStates.as_view(), name='list_states'), 
     path('cities/in/<slug>/', views.SingleState.as_view(), name='state_detail'),
 
-    path('create/all/cities/', views.make_all_states, name='make_all_states'),
+    path('create/all/states/', views.make_all_states, name='make_all_states'),
+    path('create/cities/', views.make_california_cities, name='make_california_cities'),
 ]
 
 

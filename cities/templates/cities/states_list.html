@@ -3,7 +3,6 @@
 
 
 {% block pre_city %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <div class="container">
@@ -42,6 +41,7 @@
                     {% for state in states_list %} <!--this is from the views.py, it automatically passes this list-->
                         <a href="{% url 'cities:state_detail' slug=state.slug %}"
                            class ="list-group-item-light list-group-item list-group-item-action flex-column align-items-start my-1 my-dark-grey-background">
+                            <h3>this city's pk is: {{ state.pk }}</h3>
 
 
                             <h3 class="mb-1">{{ state.name }}</h3>
