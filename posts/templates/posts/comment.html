@@ -6,14 +6,15 @@
 
     <div class="media border-left border-dark rounded my-3 px-3">
         <div class="media-body">
+
             <div class="row">
-                <div class="col"> <!--left column-->
+                <div class="col-10"> <!--left column-->
                     <div class="col-12"><p>{{ comment.message }}</p></div>
                     <div class="col-12"><p>by: {{ comment.user }} at: {{ comment.created_at }}</p></div>
                 </div>
                 <div class="col"> <!--right column-->
                     {% if user.is_authenticated %} <!--toggles comment form-->
-                        <button class="btn btn-link btn-sm text-muted" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Comment</button>
+                        <button class="btn btn-link btn-sm text-muted" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply</button>
                     {% else %} <!--just redirects to login page-->
                         <form action="{% url 'accounts:login' %}" method="POST">
                             {% csrf_token %}
@@ -31,6 +32,8 @@
                     </p>                
                 </div>
             </div>      <!--row-->
+            
+            
 
             <!-- adds all subcomments to stack -->
             {% for subcomment in comment.comment_comments.all %}
