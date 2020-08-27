@@ -125,19 +125,18 @@
     <!-- Comments -->
     
     <div class="container">
+        
+        
         <h1>Comments:</h1>
 
 
         <!-- recursive comment revealing -->
         {% create_stack post.post_comments.all as commentstack %}
-        {{ commentstack }}
-        {% for comment in commentstack %}
+        {% create_stack post.post_comments.all as commentstackcopy %}
+        {% for number in  commentstackcopy %}
             {% include 'posts/comment.html' %}
-
         {% endfor %}
-        <h2>this the last stack: {{ commentstack }}</h2>        
-        
-        
+            
 
     </div>
 

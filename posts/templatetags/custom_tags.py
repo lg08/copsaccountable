@@ -21,7 +21,6 @@ def push_item_onto_stack(stack, item):
     stack.insert(0, item)
     # return stack
 
-
 # see http://djangosnippets.org/snippets/2093/
 # from looptags import Loop
 
