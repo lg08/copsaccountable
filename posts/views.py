@@ -220,9 +220,18 @@ class SearchResultsView(generic.ListView):
 
 class WorstPostsView(generic.ListView):
     model = Post
-    template_name = 'posts/worst_posts_view.html'
+    template_name = 'posts/worst_posts_list.html'
     context_object_name = 'worst_posts_list'
 
     def get_queryset(self):
-        object_list = Post.objects.all().order_by('people_who_downvoted')
+        object_list = Post.objects.all().order_by('-num_of_downvotes')
+        return object_list
+    
+class BestPostsView(generic.ListView):
+    model = Post
+    template_name = 'posts/worst_posts_list.html'
+    context_object_name = 'worst_posts_list'
+
+    def get_queryset(self):
+        object_list = Post.objects.all().order_by('-num_of_upvotes')
         return object_list
