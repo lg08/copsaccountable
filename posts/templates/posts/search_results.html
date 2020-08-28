@@ -4,11 +4,16 @@
 {% block post_content %}
     <div class="container">
         <h1>Search Results</h1>
-    </div>
 
-    {% for post in search_results_list %}
-        {% include 'posts/post_card.html' %}
-    {% endfor %}
+        {% if search_results_list %}
+            {% for post in search_results_list %}
+                {% include 'posts/post_card.html' %}
+            {% endfor %}
+        {% else %}
+            <p class="my-5">Sorry, no results found, please try a different query</p>
+        {% endif %}
+    </div>
+    
 {% endblock %}
 
 

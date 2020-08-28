@@ -164,6 +164,8 @@ def UpvoteView(request, pk):
     if post.people_who_downvoted.filter(user=request.user).count() > 0:
         for x in post.people_who_downvoted.filter(user=request.user):
             x.delete()
+            post.num_of_downvotes -= 1
+            post.save()
             
     if not created:
         return HttpResponseRedirect(reverse('posts:detail',
@@ -172,6 +174,8 @@ def UpvoteView(request, pk):
         upvote.post = post
         upvote.user = request.user
         upvote.save()
+        post.num_of_upvotes += 1
+        post.save()
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={'pk': pk, 'username': post.user.username}))
 
@@ -182,6 +186,8 @@ def DownvoteView(request, pk):
     if post.people_who_upvoted.filter(user=request.user).count() > 0:
         for x in post.people_who_upvoted.filter(user=request.user):
             x.delete()
+            post.num_of_upvotes -= 1
+            post.save()
     
     if not created:
         return HttpResponseRedirect(reverse('posts:detail',
@@ -190,6 +196,8 @@ def DownvoteView(request, pk):
         downvote.post = post
         downvote.user = request.user
         downvote.save()
+        post.num_of_downvotes += 1
+        post.save()
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={'pk': pk, 'username': post.user.username}))
 
@@ -208,4 +216,13 @@ class SearchResultsView(generic.ListView):
             Q(location_information__icontains=query) |
             Q(time_information__icontains=query)
         )
+        return object_list
+
+class WorstPostsView(generic.ListView):
+    model = Post
+    template_name = 'posts/worst_posts_view.html'
+    context_object_name = 'worst_posts_list'
+
+    def get_queryset(self):
+        object_list = Post.objects.all().order_by('people_who_downvoted')
         return object_list
