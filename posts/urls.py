@@ -15,4 +15,5 @@ urlpatterns = [
     path('profile/of/<username>/', views.UserPage.as_view(), name='user_page'),
 
     path('create/comment/<int:subcomment>/on/<int:postpk>/<int:commentpk>/', views.create_comment, name='create_comment'),
+    path('search/', views.SearchResultsView.as_view(), name='search'),
 ]

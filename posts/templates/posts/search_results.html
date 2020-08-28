@@ -1,0 +1,15 @@
+{% extends "posts/post_base.html" %}
+
+
+{% block post_content %}
+    <div class="container">
+        <h1>Search Results</h1>
+    </div>
+
+    {% for post in search_results_list %}
+        {% include 'posts/post_card.html' %}
+    {% endfor %}
+{% endblock %}
+
+
+<!-- seems to be done rn, not entirely sure tho -->

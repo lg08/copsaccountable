@@ -14,9 +14,12 @@ from django.urls import reverse
 from braces.views import SelectRelatedMixin
 
 from . import forms
-from . import models
 from . import views
 from . import urls
+from .models import Post
+
+from django.db.models import Q  # new
+
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -190,3 +193,19 @@ def DownvoteView(request, pk):
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={'pk': pk, 'username': post.user.username}))
 
+class SearchResultsView(generic.ListView):
+    model = Post
+    template_name = 'posts/search_results.html'
+    context_object_name = "search_results_list"
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(message__icontains=query) |
+            Q(state__name__icontains=query) |
+            Q(city__name__icontains=query) |
+            Q(location_information__icontains=query) |
+            Q(time_information__icontains=query)
+        )
+        return object_list
