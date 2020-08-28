@@ -33,6 +33,10 @@ body {
     /* background-color: #222222; */
     /* background-color: #4C495D; */
 }
+
+input.this-search-bar {
+    background-color: #f9f9f9;
+}
 .purple-text {
     color: #802BB1;
 }
@@ -69,19 +73,4 @@ img {
     width: 100%;
     height: 100%;
     object-fit:  cover;
-}
-.arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-}
-.up {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-}
-
-.down {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
 }
