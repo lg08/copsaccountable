@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'cities',
     'posts',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

@@ -12,5 +12,3 @@ class SignUp(CreateView):
     form_class = forms.UserCreateForm  # this is just setting them equal to each other, no instantiating
     success_url = reverse_lazy('login')  # on a successful sign up, they will be redirected to login page
     template_name = 'accounts/signup.html'
-
-

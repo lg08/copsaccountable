@@ -42,7 +42,7 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
     #         user__username__iexact=self.kwargs.get("username")
     #     )
 
-        
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)  # general context data
@@ -54,8 +54,8 @@ class PostDetail(SelectRelatedMixin, generic.DetailView):
 
 
         # trying to get recursive comments
-        
-        
+
+
         if self.request.user.is_authenticated:
             this_person_upvoted_it = this_post.people_who_upvoted.filter(user=self.request.user).count()
             context['this_person_upvoted_it'] = this_person_upvoted_it
@@ -153,8 +153,8 @@ class UserPage(generic.ListView):
         context["post_user"] = self.post_user
         return context
 
-    
-    
+
+
 def UpvoteView(request, pk):
     # post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
     # post.upvotes.add(request.user)
@@ -166,7 +166,7 @@ def UpvoteView(request, pk):
             x.delete()
             post.num_of_downvotes -= 1
             post.save()
-            
+
     if not created:
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={'pk': pk, 'username': post.user.username}))
@@ -188,7 +188,7 @@ def DownvoteView(request, pk):
             x.delete()
             post.num_of_upvotes -= 1
             post.save()
-    
+
     if not created:
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={'pk': pk, 'username': post.user.username}))
@@ -226,7 +226,7 @@ class WorstPostsView(generic.ListView):
     def get_queryset(self):
         object_list = Post.objects.all().order_by('-num_of_downvotes')
         return object_list
-    
+
 class BestPostsView(generic.ListView):
     model = Post
     template_name = 'posts/worst_posts_list.html'
