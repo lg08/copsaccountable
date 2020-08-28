@@ -39,7 +39,7 @@
                 <div class="list-group my-3" id="myDIV">
 
                     {% for city in state.cities.all %} <!--this is from the views.py, it automatically passes this list-->
-                        <a href="{% url 'cities:single' slug=city.slug %}"
+                        <a href="{% url 'cities:single' slug=city.slug pk=city.pk %}"
                            class ="list-group-item-light list-group-item list-group-item-action flex-column align-items-start my-1 my-dark-grey-background">
 
 
