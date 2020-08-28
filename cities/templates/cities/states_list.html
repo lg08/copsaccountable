@@ -41,7 +41,7 @@
                     {% for state in states_list %} <!--this is from the views.py, it automatically passes this list-->
                         <a href="{% url 'cities:state_detail' slug=state.slug %}"
                            class ="list-group-item-light list-group-item list-group-item-action flex-column align-items-start my-1 my-dark-grey-background">
-                            <h3>this city's pk is: {{ state.pk }}</h3>
+                            <!-- <h3>this city's pk is: {{ state.pk }}</h3> -->
 
 
                             <h3 class="mb-1">{{ state.name }}</h3>
