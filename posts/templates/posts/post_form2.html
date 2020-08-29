@@ -1,0 +1,60 @@
+{% extends "posts/post_base.html" %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
+
+{% block post_content %}
+
+    <form class="form-inline my-2 my-lg-0" action="{% url 'posts:search' %}" method="GET">
+        <input class="form-control mr-sm-2 this-search-bar" type="search" placeholder="Search for posts" aria-label="Search" name="q">
+        <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    </form>
+
+
+    <!-- testing stuff from here: https://jsfiddle.net/patelriki13/m1ezs70o/ -->
+    <form name="myform" id="myForm" onload="myFunction()">
+        <select id="countySel" size="1">
+            <option value="" selected="selected">-- Select Country --</option>
+        </select>
+        <br>
+        <br>
+        
+        <select id="stateSel" size="1">
+            <option value="" selected="selected">-- Select State--</option>
+        </select>
+        <br>
+        <br>    
+        <select id="citySel" size="1">
+            <option value="" selected="selected">-- Select City--</option>
+        </select>
+        <br>
+        <br>
+        <select id="zipSel" size="1">
+            <option value="" selected="selected">-- Select Zip--</option>
+        </select>
+    </form>
+
+    <p id="myFrame">This example uses the HTML DOM to assign an "onload" event to an iframe element.</p>
+
+    <iframe id="" src="/default.asp"></iframe>
+
+    <p id="demo"></p>
+
+    
+
+
+    <script>                    <!--scripting stuff-->
+     /* function myFunction() {
+      *     alert("Page is loaded");
+      * } */
+     document.getElementById("myFrame").onload = function() {myFunction()};
+
+     function myFunction() {
+         document.getElementById("demo").innerHTML = "Iframe is this is Lucas.";
+     }
+    </script>
+    
+
+{% endblock %}
+
+<!-- seems to be done rn -->
+

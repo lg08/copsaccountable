@@ -25,19 +25,23 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class PostList(SelectRelatedMixin, generic.ListView):
+class PostList(# SelectRelatedMixin, 
+               generic.ListView):
     model = models.Post
-    select_related = ("user", "city")  # not entirely sure what this does yet
+    # select_related = ("user", "city")  # not entirely sure what this does yet
     context_object_name = 'post_list'
     template_name = 'posts/post_list.html'
 
 
-class PostDetail(SelectRelatedMixin, generic.DetailView):
+class PostDetail(# SelectRelatedMixin, 
+                 generic.DetailView):
     model = models.Post
-    select_related = ("user", "city")
+    # select_related = ("user", "city")
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # queryset.filter(id__exact=self.kwargs.get()
+        return queryset
     #     return queryset.filter(
     #         user__username__iexact=self.kwargs.get("username")
     #     )
@@ -80,7 +84,8 @@ def create_comment(request, postpk, commentpk, subcomment):
     return HttpResponseRedirect(reverse('posts:detail',
                                         kwargs={'pk': postpk, 'username': post.user.username}))
 
-class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
+class CreatePost(LoginRequiredMixin, # SelectRelatedMixin, 
+                 generic.CreateView):
     form_class = forms.PostForm
     model = models.Post
     # fields = ('title', 'message', 'city', 'video')
@@ -99,9 +104,10 @@ class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
     # the success_url will be the get_absolute_url from models.py
 
 
-class DeletePost(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
+class DeletePost(LoginRequiredMixin, # SelectRelatedMixin,
+                 generic.DeleteView):
     model = models.Post
-    select_related = ("user", "city")
+    # select_related = ("user", "city")
     success_url = reverse_lazy("posts:all")
     template_name = 'posts/post_confirm.html'
 
@@ -224,14 +230,14 @@ class WorstPostsView(generic.ListView):
     context_object_name = 'worst_posts_list'
 
     def get_queryset(self):
-        object_list = Post.objects.all().order_by('-num_of_downvotes')
+        object_list = Post.objects.order_by('-num_of_downvotes')[0:30]
         return object_list
 
 class BestPostsView(generic.ListView):
     model = Post
-    template_name = 'posts/worst_posts_list.html'
+    template_name = 'posts/best_posts_list.html'
     context_object_name = 'worst_posts_list'
 
     def get_queryset(self):
-        object_list = Post.objects.all().order_by('-num_of_upvotes')
+        object_list = Post.objects.order_by('-num_of_upvotes')[0:30]
         return object_list

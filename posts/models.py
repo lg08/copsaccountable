@@ -63,6 +63,9 @@ class Post(models.Model):
     num_of_downvotes = models.IntegerField(
         default=0
     )
+    views = models.IntegerField(
+        default=0
+    )
 
     def __str__(self):
         return self.title

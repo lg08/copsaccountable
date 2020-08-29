@@ -1,0 +1,20 @@
+{% extends "posts/post_base.html" %}
+
+
+{% block post_content %}
+    <div class="container">
+        <h1>Most liked videos</h1>
+
+        {% if worst_posts_list %}
+            {% for post in worst_posts_list %}
+                {% include 'posts/post_card.html' %}
+            {% endfor %}
+        {% else %}
+            <p class="my-5">Sorry, there are no posts I guess, that's weird</p>
+        {% endif %}
+    </div>
+    
+{% endblock %}
+
+
+<!-- seems to be done rn, not entirely sure tho -->

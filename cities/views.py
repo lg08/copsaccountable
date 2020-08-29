@@ -46,6 +46,3 @@ class ListStates(generic.ListView):
 class SingleState(generic.DetailView):
     model = State
     template_name = 'cities/state_detail.html'
-
-
-
