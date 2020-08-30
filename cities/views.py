@@ -113,8 +113,8 @@ def make_all_the_cities(self, **kwargs):
         state_name = row[0]
         state, created_state = State.objects.get_or_create(name=state_name)
         if created_state:
-            new_state.name = state_name
-            new_state.save()
+            state.name = state_name
+            state.save()
         for city in row:
             if count != 0:
                 new_city, created = City.objects.get_or_create(state=state, name=city)
