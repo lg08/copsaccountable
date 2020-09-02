@@ -18,7 +18,7 @@ class Post(models.Model):
     title = models.CharField(
         max_length=100,
         null=True,
-        blank=True
+        # blank=True
     )
     message = models.TextField()
     message_html = models.TextField(

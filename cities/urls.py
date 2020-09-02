@@ -11,6 +11,8 @@ urlpatterns = [
 
     # path('create/all/states/', views.make_all_states, name='make_all_states'),
     path('create/cities/', views.make_all_the_cities, name='make_all_the_cities'),
+
+
 ]
 
 

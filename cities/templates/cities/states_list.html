@@ -4,7 +4,7 @@
 
 {% block pre_city %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <div class="container">
     </div>
 
@@ -58,17 +58,9 @@
         </div>
         
 
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
     </div>
 
-    <script>
-     $(document).ready(function(){
-         $("#myInput").on("keyup", function() {
-             var value = $(this).val().toLowerCase();
-             $("#myDIV *").filter(function() {
-                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-             });
-         });
-     });
-    </script>
-
+    {% include 'cities/back_to_top_button.html' %}
 {% endblock %}

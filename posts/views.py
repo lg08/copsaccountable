@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import Http404
 from django.views import generic
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from . import models
 from posts.models import Upvote, Downvote
@@ -17,7 +17,7 @@ from . import forms
 from . import views
 from . import urls
 from .models import Post
-
+from cities.models import City, State
 from django.db.models import Q  # new
 
 
@@ -25,16 +25,14 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class PostList(# SelectRelatedMixin, 
-               generic.ListView):
+class PostList(generic.ListView):
     model = models.Post
     # select_related = ("user", "city")  # not entirely sure what this does yet
     context_object_name = 'post_list'
     template_name = 'posts/post_list.html'
 
 
-class PostDetail(# SelectRelatedMixin, 
-                 generic.DetailView):
+class PostDetail(generic.DetailView):
     model = models.Post
     # select_related = ("user", "city")
 
@@ -46,8 +44,6 @@ class PostDetail(# SelectRelatedMixin,
     #         user__username__iexact=self.kwargs.get("username")
     #     )
 
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)  # general context data
         this_post = get_object_or_404(models.Post, pk=self.kwargs['pk'])  # just gets the post we're currently on
@@ -55,10 +51,6 @@ class PostDetail(# SelectRelatedMixin,
         context['total_downvotes'] = this_post.people_who_downvoted.count()
 
         context['comment_form'] = forms.CommentForm()
-
-
-        # trying to get recursive comments
-
 
         if self.request.user.is_authenticated:
             this_person_upvoted_it = this_post.people_who_upvoted.filter(user=self.request.user).count()
@@ -84,8 +76,7 @@ def create_comment(request, postpk, commentpk, subcomment):
     return HttpResponseRedirect(reverse('posts:detail',
                                         kwargs={'pk': postpk, 'username': post.user.username}))
 
-class CreatePost(LoginRequiredMixin, # SelectRelatedMixin, 
-                 generic.CreateView):
+class CreatePost(LoginRequiredMixin, generic.CreateView):
     form_class = forms.PostForm
     model = models.Post
     # fields = ('title', 'message', 'city', 'video')
@@ -102,6 +93,31 @@ class CreatePost(LoginRequiredMixin, # SelectRelatedMixin,
         self.object.save()
         return super().form_valid(form)
     # the success_url will be the get_absolute_url from models.py
+
+
+def my_custom_form_view(request):
+    if request.method == 'POST':
+        form = forms.MyCustomPostFormView(request.POST)
+        if form.is_valid():
+            new_post = Post()
+            new_post.state = State.objects.get(slug=form.cleaned_data['state'])
+            new_post.city = City.objects.get(slug=form.cleaned_data['city'], state=new_post.state)
+            new_post.title = form.cleaned_data['title']
+            new_post.message = form.cleaned_data['message']
+            new_post.user = request.user
+            new_post.save()
+            return HttpResponseRedirect(reverse('posts:detail', kwargs={'pk':new_post.pk, 'username':request.user.username}))
+    else:
+        form = forms.MyCustomPostFormView()
+    context = {
+        'form': form,
+        }
+    return render(request, 'posts/post_form.html', context)
+    
+def load_cities(request):
+    state_id = request.objects.get('my_state_thing')
+    cities = City.objects.filter(state_id=state_id).order_by('name')
+    return render(request, 'posts/city_dropdown_list_options.html', {'cities': cities})
 
 
 class DeletePost(LoginRequiredMixin, # SelectRelatedMixin,

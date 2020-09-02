@@ -1,4 +1,4 @@
-<div class="">
+<div class="mb-5">
     <nav class="navbar navbar-expand-md navbar-color">
 
         <a class="navbar-brand text-dark" href="{% url 'home' %}"><strong>C.A.</strong></a>
@@ -12,12 +12,13 @@
                 <a class="nav-item nav-link text-dark" href="{% url 'about' %}">About<span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link text-dark" href="{% url 'cities:list_states' %}">States<span class="sr-only">(current)</span></a>
             </div>
+            <a class="nav-item nav-link text-dark" href="{% url 'posts:worst_posts' %}">Worst Posts<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link text-dark" href="{% url 'posts:best_posts' %}">Best Posts<span class="sr-only">(current)</span></a>
             <form class="form-inline my-2 my-lg-0" action="{% url 'posts:search' %}" method="GET">
                 <input class="form-control mr-sm-2 this-search-bar" type="search" placeholder="Search for posts" aria-label="Search" name="q">
                 <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
             </form>
-            <a class="nav-item nav-link text-dark" href="{% url 'posts:worst_posts' %}">Worst Posts<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link text-dark" href="{% url 'posts:best_posts' %}">Best Posts<span class="sr-only">(current)</span></a>
+
         </div>
 
 
