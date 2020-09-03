@@ -3,12 +3,9 @@
 
 {% block pre_city %}
     <div class="container">
-        
-        <center>
-            <h1>Cities in {{ state.name }}</h1>
-        </center>
+        <h1>Cities in {{ state.name }}</h1>
         {% include 'cities/addons/filter-list-items.html' %}
-        
+            
     </div>
 {% endblock %}
 
