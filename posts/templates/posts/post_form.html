@@ -4,22 +4,13 @@
 {% block post_content %}
     <div class="container">
 
-        <!-- <h4>Create New Post</h4>
-             <form method="POST" action="{% url 'posts:ajax_load_cities' %}" id="PostForm" enctype="multipart/form-data">
-             {% csrf_token %}
-             {% bootstrap_form form %}
-             {% buttons %}
-             <button type="submit" class="btn btn-primary btn-large">Post</button>
-             {% endbuttons %}
-             </form> -->
-
-        <form method="post" id="postForm" data-cities-url="{% url 'posts:create' %}" novalidate>
+        <h4>Create New Post</h4>
+        <form method="POST" action="{% url 'posts:create' %}" id="PostForm" enctype="multipart/form-data">
             {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <button type="submit">Post</button>
-            <!-- <a href=" url 'person_changelist' ">Nevermind</a> -->
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary btn-large">Post</button>
+             {% endbuttons %}
         </form>
 
 

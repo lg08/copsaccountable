@@ -10,14 +10,18 @@ class MyCustomPostFormView(forms.Form):
     city = forms.CharField()
     title = forms.CharField()
     message = forms.CharField()
-
+    video = forms.FileField(required=False)
+    thumbnail = forms.ImageField(required=False)
+    time_information = forms.CharField(required=False)
+    location_information = forms.CharField(required=False)
+    
     def clean(self):
         cleaned_data = super(MyCustomPostFormView, self).clean()
         if State.objects.filter(slug=slugify(cleaned_data['state'])):
-            if City.objects.filter(state=State.objects.get(slug=(cleaned_data['state'])), slug=slugify(cleaned_data['city'])):
+            if City.objects.filter(state=State.objects.get(slug=slugify(cleaned_data['state'])), slug=slugify(cleaned_data['city'])):
                 pass
             else:
-                raise ValidationError(('Please check the spelling of the city'))                
+                raise ValidationError(('Please check the spelling of the city'))
         else:
             raise ValidationError(('Please check the spelling of the state'))
         return cleaned_data

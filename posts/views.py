@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from . import models
 from posts.models import Upvote, Downvote
 from django.urls import reverse
+from django.utils.text import slugify
 # from django.core.files.storage import FileSystemStorage
 
 # pip install django-braces
@@ -97,14 +98,18 @@ class CreatePost(LoginRequiredMixin, generic.CreateView):
 
 def my_custom_form_view(request):
     if request.method == 'POST':
-        form = forms.MyCustomPostFormView(request.POST)
+        form = forms.MyCustomPostFormView(request.POST, request.FILES)
         if form.is_valid():
             new_post = Post()
-            new_post.state = State.objects.get(slug=form.cleaned_data['state'])
-            new_post.city = City.objects.get(slug=form.cleaned_data['city'], state=new_post.state)
+            new_post.state = State.objects.get(slug=slugify(form.cleaned_data['state']))
+            new_post.city = City.objects.get(slug=slugify(form.cleaned_data['city']), state=new_post.state)
             new_post.title = form.cleaned_data['title']
             new_post.message = form.cleaned_data['message']
             new_post.user = request.user
+            new_post.time_information = form.cleaned_data['time_information']
+            new_post.location_information = form.cleaned_data['location_information']
+            new_post.video = form.cleaned_data['video']
+            new_post.thumbnail = form.cleaned_data['thumbnail']
             new_post.save()
             return HttpResponseRedirect(reverse('posts:detail', kwargs={'pk':new_post.pk, 'username':request.user.username}))
     else:
