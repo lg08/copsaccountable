@@ -3,9 +3,9 @@
 
         <a class="navbar-brand nav-link text-dark dope-hover-link" href="{% url 'home' %}"><strong>C.A.</strong></a>
 
-        <button class="navbar-toggler border border-dark" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler border border-dark p-0 m-0" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" id="this-toggle-button">
             <!-- <span class="navbar-toggler-icon"></span> -->
-            menu
+            <span class="dope-ass-text">menu</span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav nav">
@@ -106,6 +106,21 @@
      display: inline-block;
      padding: 15px 20px;
      position: relative;
+ }
+ .dope-ass-text {
+     color: #000;
+     text-transform: uppercase;
+     text-decoration: none;
+     letter-spacing: 0.15em;
+     
+     display: inline-block;
+     padding: 15px 20px;
+     position: relative;
+ }
+
+ #this-toggle-button {
+     /* max-width:1em; */
+     font-size:1em;
  }
 
 </style>
