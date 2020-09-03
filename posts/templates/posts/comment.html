@@ -14,11 +14,11 @@
                 </div>
                 <div class="col"> <!--right column-->
                     {% if user.is_authenticated %} <!--toggles comment form-->
-                        <button class="btn btn-link btn-sm text-muted" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply</button>
+                        <button class="btn btn-link btn-sm text-muted" type="button" data-toggle="collapse" data-target=".form-collapse-{{ comment.pk }}" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{% include 'posts/addons/reply-button.html' %}</button>
                     {% else %} <!--just redirects to login page-->
                         <form action="{% url 'accounts:login' %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-light">Reply to Post</button>
+                            <button type="submit" class="">{% include 'posts/addons/reply-button.html' %}</button>
                         </form>
                     {% endif %}
                 </div>  <!--col-->

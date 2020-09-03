@@ -9,7 +9,7 @@
 
     <div class="container">
         <div class="card bg-light w-100 mt-3">
-            <div class="card-header my-dark-grey-background"><h2>{{ post.title }}</h2></div>
+            <div class="card-header my-dark-grey-background"><h2><center>{{ post.title }}</center></h2></div>
             <div class="card-body my-dark-grey-background">
                 <div class="row">
                     <div class="col-12">
@@ -41,12 +41,18 @@
                         {% if user.is_authenticated %}
                             <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">Upvote</button>
+                                <button type="submit" name="post_id" value="{{ post.id }}" >
+                                    {% if this_person_upvoted_it %}
+                                        {% include 'posts/addons/upvote_button.html' %}
+                                    {% else %}
+                                        {% include 'posts/addons/hollow-heart-up.html' %}
+                                    {% endif %}
+                                </button>
                             </form>
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">UpVote</button>
+                                <button type="submit" class="">{% include 'posts/addons/hollow-heart-up.html' %}</button>
                             </form>
                         {% endif %}
                         <p>upvotes: {{ total_upvotes }}</p>
@@ -55,23 +61,30 @@
                         {% if user.is_authenticated %}
                             <form action="{% url 'posts:downvote_post' pk=post.pk %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary">DownVote</button>
+                                <button type="submit" name="post_id" value="{{ post.id }}" class="">
+                                    {% if this_person_downvoted_it %}
+                                        {% include 'posts/addons/downvote_button.html' %}
+                                    {% else %}
+                                        {% include 'posts/addons/hollow-heart-down.html' %}
+                                    {% endif %}
+                                </button>
+                                
                             </form>
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">DownVote</button>
+                                <button type="submit" class="">{% include 'posts/addons/hollow-heart-down.html' %}</button>
                             </form>
                         {% endif %}
                         <p>downvotes: {{ total_downvotes }}</p>
                     </div>
                     <div class="col">
                         {% if user.is_authenticated %}
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Reply to Post</button>
+                            <button class="" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{% include 'posts/addons/reply-button.html' %}</button>
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Reply to Post</button>
+                                <button type="submit" class="">{% include 'posts/addons/reply-button.html' %}</button>
                             </form>
                         {% endif %}
                     </div>
@@ -80,7 +93,7 @@
 
                             <form action="{% url 'posts:delete' pk=post.pk %}">
                                 {% csrf_token %}
-                                <button class="btn btn-warning">Delete Post</button>
+                                <button class="">{% include 'posts/addons/trash-button.html' %}</button>
                             </form>
                         </div>
 

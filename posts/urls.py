@@ -1,26 +1,65 @@
 from django.urls import path
 from . import views
 
-app_name='posts'
+app_name = 'posts'
 
 urlpatterns = [
-    path('', views.PostList.as_view(), name="all"),
+    path(                       # list of all posts ever
+        '',
+        views.PostList.as_view(),
+        name="all"
+    ),
+    path(                       # create a new post
+        "new/",
+        views.form_create_view,
+        name="create"
+    ),
+    path(                       # shows the post in detail
+        "by/<int:pk>/",
+        views.PostDetail.as_view(),
+        name="detail"
+    ),
+    path(                       # deletes a post
+        "delete/<int:pk>/",
+        views.DeletePost.as_view(),
+        name='delete'
+    ),
+    path(
+        'profile/of/<username>/',
+        views.UserPage.as_view(),
+        name='user_page'
+    ),  # user profile page
+    path(
+        'search/',
+        views.SearchResultsView.as_view(),
+        name='search'
+    ),  # search results page
+    path(
+        'worst_posts/',
+        views.WorstPostsView.as_view(),
+        name='worst_posts'
+    ),  # top 30 worst posts
+    path(
+        'best_posts/',
+        views.BestPostsView.as_view(),
+        name='best_posts'
+    ),  # top 30 best posts
 
-    path("new/", views.form_create_view, name="create"),
-    
-    path("by/<username>/", views.UserPosts.as_view(),name="for_user"),
-    path("by/<username>/<int:pk>/", views.PostDetail.as_view(),name="detail"),
-    path("delete/<int:pk>/", views.DeletePost.as_view(),name="delete"),
-
-    path('upvote/<int:pk>', views.UpvoteView, name='upvote_post'),
-    path('downvote/<int:pk>', views.DownvoteView, name='downvote_post'),
-    path('profile/of/<username>/', views.UserPage.as_view(), name='user_page'),
-
-    path('create/comment/<int:subcomment>/on/<int:postpk>/<int:commentpk>/', views.create_comment, name='create_comment'),
-    path('search/', views.SearchResultsView.as_view(), name='search'),
-    path('worst_posts/', views.WorstPostsView.as_view(), name='worst_posts'),
-    path('best_posts/', views.BestPostsView.as_view(), name='best_posts'),
-
-    path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'),  # <-- this one here
+    # function-based views
+    path(
+        'upvote/<int:pk>',
+        views.UpvoteView,
+        name='upvote_post'
+    ),
+    path(
+        'downvote/<int:pk>',
+        views.DownvoteView,
+        name='downvote_post'
+    ),
+    path(
+        'create/comment/<int:subcomment>/on/<int:postpk>/<int:commentpk>/',
+        views.create_comment,
+        name='create_comment'
+    ),
 
 ]

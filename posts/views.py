@@ -61,7 +61,6 @@ def create_comment(request, postpk, commentpk, subcomment):
     return HttpResponseRedirect(reverse('posts:detail',
                                         kwargs={
                                             'pk': postpk,
-                                            'username': post.user.username
                                         }))
 
 
@@ -85,7 +84,6 @@ def form_create_view(request):
             new_post.save()
             return HttpResponseRedirect(reverse('posts:detail', kwargs={
                 'pk': new_post.pk,
-                'username': request.user.username
             }))
     else:
         form = forms.PostForm()
@@ -107,26 +105,6 @@ class DeletePost(LoginRequiredMixin, generic.DeleteView):
     def delete(self, *args, **kwargs):
         messages.success(self.request, "Post Deleted")
         return super().delete(*args, **kwargs)
-
-
-class UserPosts(generic.ListView):
-    model = Post
-    template_name = "posts/user_post_list.html"
-
-    def get_queryset(self):
-        try:
-            self.post_user = User.objects.prefetch_related("posts").get(
-                username__iexact=self.kwargs.get("username")
-            )
-        except User.DoesNotExist:
-            raise Http404
-        else:
-            return self.post_user.posts.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["post_user"] = self.post_user
-        return context
 
 
 class UserPage(generic.ListView):
@@ -166,7 +144,6 @@ def UpvoteView(request, pk):
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={
                                                 'pk': pk,
-                                                'username': post.user.username
                                             }))
     else:
         upvote.post = post
@@ -177,7 +154,6 @@ def UpvoteView(request, pk):
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={
                                                 'pk': pk,
-                                                'username': post.user.username
                                             }))
 
 
@@ -197,7 +173,6 @@ def DownvoteView(request, pk):
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={
                                                 'pk': pk,
-                                                'username': post.user.username
                                             }))
     else:
         downvote.post = post
@@ -208,7 +183,6 @@ def DownvoteView(request, pk):
         return HttpResponseRedirect(reverse('posts:detail',
                                             kwargs={
                                                 'pk': pk,
-                                                'username': post.user.username
                                             }))
 
 
