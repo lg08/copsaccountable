@@ -20,13 +20,13 @@
                 {% if this_person_downvoted_it %}
                     {% include 'posts/addons/downvote_button.html' %}
                 {% else %}
-                    {% include 'posts/addons/hollow-heart-down.html' %}
+                    {% include 'posts/addons/angry-emoticon.html' %}
                 {% endif %}
                 {{ post.num_of_upvotes }}
                 {% if this_person_upvoted_it %}
                     {% include 'posts/addons/upvote_button.html' %}
                 {% else %}
-                    {% include 'posts/addons/hollow-heart-up.html' %}
+                    {% include 'posts/addons/kiss-emoticon.html' %}
                 {% endif %}
                 {{ post.num_of_downvotes }}
             </small></span>

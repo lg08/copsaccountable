@@ -43,9 +43,9 @@
                                 {% csrf_token %}
                                 <button type="submit" name="post_id" value="{{ post.id }}" >
                                     {% if this_person_upvoted_it %}
-                                        {% include 'posts/addons/upvote_button.html' %}
+                                        {% include 'posts/addons/kiss-emoticon.html' %}
                                     {% else %}
-                                        {% include 'posts/addons/hollow-heart-up.html' %}
+                                        {% include 'posts/addons/kiss-emoticon-outline.html' %}
                                     {% endif %}
                                 </button>
                             </form>
@@ -63,9 +63,9 @@
                                 {% csrf_token %}
                                 <button type="submit" name="post_id" value="{{ post.id }}" class="">
                                     {% if this_person_downvoted_it %}
-                                        {% include 'posts/addons/downvote_button.html' %}
+                                        {% include 'posts/addons/angry-emoticon.html' %}
                                     {% else %}
-                                        {% include 'posts/addons/hollow-heart-down.html' %}
+                                        {% include 'posts/addons/angry-emoticon-outline.html' %}
                                     {% endif %}
                                 </button>
                                 
