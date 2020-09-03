@@ -19,13 +19,63 @@
             {% for state in states_list %}
                 <a href="{% url 'cities:state_detail' slug=state.slug %}"
                    class ="list-group-item-light list-group-item list-group-item-action 
-                         flex-column  my-1 my-dark-grey-background">
+                         flex-column  my-1 my-dark-grey-background" onclick="on({{ state.pk }})" data-id="{{ state.pk }}">
                     <h3 class="mb-1">{{ state.name }}</h3>
                 </a>
+                <div class="overlay" id="overlay_{{ state.pk }}" onclick="">
+                    <div id="text">Loading {{ state.cities.count }} cities... in {{ state }}
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
             
         </div>
         
     </div>
     {% include 'cities/addons/back_to_top_button.html' %}
+
+
+    <script>
+     function on(id) {
+         str = "overlay_id";
+         var n = str.replace("id", id);
+
+         document.getElementById(n).style.display = "block";
+     }
+
+     function off() {
+         document.getElementById("overlay").style.display = "none";
+     }
+    </script>
+
+    <style>
+     .overlay {
+         position: fixed;
+         display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+        }
+
+        #text{
+        position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 30px;
+            color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        }
+    </style>
+    
+    
+    
 {% endblock %}

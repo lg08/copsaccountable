@@ -1,5 +1,5 @@
 <!-- this is just a card with the thumbnail, title and message of a post -->
-<div class="card my-3">
+<div class="card my-3 pb-2">
     <div class="row">
         <a href="{% url 'posts:detail' pk=post.pk %}" class="stretched-link"></a>
         
@@ -13,27 +13,36 @@
         </div>
         
         <div class="col-8 card-body">
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.message }}</p>
+                </div>
+                <div class="row" style="position:absolute;bottom:0;">
+                    <div class="col-12-align-self-end">
+                        <span class="col card-link text-muted"><small>
+                            {% if this_person_downvoted_it %}
+                                {% include 'posts/addons/downvote_button.html' %}
+                            {% else %}
+                                {% include 'posts/addons/angry-emoticon.html' %}
+                            {% endif %}
+                            {{ post.num_of_upvotes }}
+                            {% if this_person_upvoted_it %}
+                                {% include 'posts/addons/upvote_button.html' %}
+                            {% else %}
+                                {% include 'posts/addons/kiss-emoticon.html' %}
+                            {% endif %}
+                            {{ post.num_of_downvotes }}
+                        </small></span>
+                        <span class="col card-link text-muted"><small>comments: {{ post.post_comments.count }}</small></span>
+                        <span class="col card-link text-muted"><small>{{ post.city }}, {{ post.state }}</small></span>        
+                    </div>
+                </div>
+                
+            </div>
             
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">{{ post.message }}</p>
-            <span class="col card-link text-muted"><small>
-                {% if this_person_downvoted_it %}
-                    {% include 'posts/addons/downvote_button.html' %}
-                {% else %}
-                    {% include 'posts/addons/angry-emoticon.html' %}
-                {% endif %}
-                {{ post.num_of_upvotes }}
-                {% if this_person_upvoted_it %}
-                    {% include 'posts/addons/upvote_button.html' %}
-                {% else %}
-                    {% include 'posts/addons/kiss-emoticon.html' %}
-                {% endif %}
-                {{ post.num_of_downvotes }}
-            </small></span>
-            <span class="col card-link text-muted"><small>comments: {{ post.post_comments.count }}</small></span>
-            <span class="col card-link text-muted"><small>{{ post.city }}, {{ post.state }}</small></span>
         </div>
         
-        </div>
-        
+    </div>
+    
 </div>

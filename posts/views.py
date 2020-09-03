@@ -95,7 +95,7 @@ def form_create_view(request):
 
 class DeletePost(LoginRequiredMixin, generic.DeleteView):
     model = Post
-    success_url = reverse_lazy("posts:all")
+    success_url = reverse_lazy("home")
     template_name = 'posts/post_confirm.html'
 
     def get_queryset(self):
