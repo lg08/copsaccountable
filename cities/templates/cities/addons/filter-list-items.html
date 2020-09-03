@@ -1,0 +1,19 @@
+<!-- just inputs a search bar that filters the items in a list-group -->
+
+<!-- taken from here: https://www.w3schools.com/booTsTrap/tryit.asp?
+     filename=trybs_filters_table&stacked=h -->
+
+<input class="form-control" id="myInput" type="text" placeholder="Filter states...">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+ $(document).ready(function(){
+     $("#myInput").on("keyup", function() {
+         var value = $(this).val().toLowerCase();
+         $("#myDIV a").filter(function() {
+             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+         });
+     });
+ });
+</script>

@@ -1,66 +1,31 @@
 {% extends 'cities/cities_base.html' %}
 
 
-
 {% block pre_city %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <div class="container">
-    </div>
-
-    <script>
-     $(document).ready(function(){
-         $("#myInput").on("keyup", function() {
-             var value = $(this).val().toLowerCase();
-             $("#myDIV *").filter(function() {
-                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-             });
-         });
-     });
-    </script>
-
-
-    <div class="container">
+        
         <h1>States</h1>
-
-        <input class="form-control" id="myInput" type="text" placeholder="Filter states...">
+        {% include 'cities/addons/filter-list-items.html' %}
+        
     </div>
 {% endblock %}
 
 
-{% block city_content %}
-
-    
+{% block city_content %}    
     <div class="container">
         
-        <div class="row">
-            <div class="col-12">
-
-
-                <div class="list-group my-3" id="myDIV">
-                    {% for state in states_list %} <!--this is from the views.py, it automatically passes this list-->
-                        <a href="{% url 'cities:state_detail' slug=state.slug %}"
-                           class ="list-group-item-light list-group-item list-group-item-action flex-column align-items-start my-1 my-dark-grey-background">
-                            <!-- <h3>this city's pk is: {{ state.pk }}</h3> -->
-
-
-                            <h3 class="mb-1">{{ state.name }}</h3>
-                            
-
-                            
-                        </a>
-
-                    {% endfor %}
-                </div>
-                
-
-            </div>
+        <div class="list-group my-3" id="myDIV">
+            
+            {% for state in states_list %}
+                <a href="{% url 'cities:state_detail' slug=state.slug %}"
+                   class ="list-group-item-light list-group-item list-group-item-action 
+                         flex-column  my-1 my-dark-grey-background">
+                    <h3 class="mb-1">{{ state.name }}</h3>
+                </a>
+            {% endfor %}
+            
         </div>
         
-
-        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-
     </div>
-
-    {% include 'cities/back_to_top_button.html' %}
+    {% include 'cities/addons/back_to_top_button.html' %}
 {% endblock %}
