@@ -41,7 +41,7 @@
                         {% if user.is_authenticated %}
                             <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" name="post_id" value="{{ post.id }}" >
+                                <button class="border-0" type="submit" name="post_id" value="{{ post.id }}" >
                                     {% if this_person_upvoted_it %}
                                         {% include 'posts/addons/kiss-emoticon.html' %}
                                     {% else %}
@@ -52,7 +52,7 @@
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="">{% include 'posts/addons/hollow-heart-up.html' %}</button>
+                                <button class="border-0 type="submit" >{% include 'posts/addons/hollow-heart-up.html' %}</button>
                             </form>
                         {% endif %}
                         <p>upvotes: {{ total_upvotes }}</p>
@@ -61,7 +61,7 @@
                         {% if user.is_authenticated %}
                             <form action="{% url 'posts:downvote_post' pk=post.pk %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" name="post_id" value="{{ post.id }}" class="">
+                                <button type="submit" class="border-0" name="post_id" value="{{ post.id }}" class="">
                                     {% if this_person_downvoted_it %}
                                         {% include 'posts/addons/angry-emoticon.html' %}
                                     {% else %}
@@ -73,14 +73,14 @@
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="">{% include 'posts/addons/hollow-heart-down.html' %}</button>
+                                <button type="submit" class="border-0">{% include 'posts/addons/hollow-heart-down.html' %}</button>
                             </form>
                         {% endif %}
                         <p>downvotes: {{ total_downvotes }}</p>
                     </div>
                     <div class="col">
                         {% if user.is_authenticated %}
-                            <button class="" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{% include 'posts/addons/reply-button.html' %}</button>
+                            <button class="border-0" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{% include 'posts/addons/reply-button.html' %}</button>
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
@@ -93,7 +93,7 @@
 
                             <form action="{% url 'posts:delete' pk=post.pk %}">
                                 {% csrf_token %}
-                                <button class="">{% include 'posts/addons/trash-button.html' %}</button>
+                                <button class="border-0">{% include 'posts/addons/trash-button.html' %}</button>
                             </form>
                         </div>
 
@@ -106,7 +106,7 @@
             <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=post.pk subcomment=0 %}" method="POST" class="collapse multi-collapse">
                 {% bootstrap_form comment_form %}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-secondary">Submit</button>
             </form>
         </p>                        
     </div>                      <!--container-->
