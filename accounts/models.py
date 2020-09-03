@@ -6,11 +6,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-
-
 class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    # upvoted_posts = models.ManyToManyField(Post, related_name='users_who_upvoted')
+    user = models.OneToOneField(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username

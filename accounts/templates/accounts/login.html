@@ -1,3 +1,4 @@
+<!-- login form for users -->
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
@@ -5,9 +6,9 @@
 
 <div class="container">
     <h1>Log In</h1>
-    <form method ="post"><!-- no action necessary because it's taken care of by django -->
+    <form method ="post">
 	{% csrf_token %}
-	{% bootstrap_form form %}<!-- allows us to use bootstrap on this form to look a lot nicer -->
+	{% bootstrap_form form %}
 
 	<input name="" type="submit" value="Log In" class ="btn btn-primary" />
 	
