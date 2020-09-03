@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+# this model not in use rn but necessary to add fields later on
 class Profile(models.Model):
     user = models.OneToOneField(
         User,
@@ -16,8 +17,8 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-
-    # got this stuff from here: https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html
+    # got this stuff from here: https://simpleisbetterthancomplex.com/tutorial/
+    # 2016/07/22/how-to-extend-django-user-model.html
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
@@ -28,10 +29,7 @@ class Profile(models.Model):
         instance.profile.save()
 
 
-
-
-
 class User(auth.models.User, auth.models.PermissionsMixin):
 
     def __str__(self):
-        return "@{}".format(self.username)  # username variable built into auth.models.user; documentation found here: https://docs.djangoproject.com/en/3.0/ref/contrib/auth/
+        return "@{}".format(self.username)
