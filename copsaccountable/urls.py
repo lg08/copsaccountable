@@ -23,15 +23,18 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage.as_view(), name='home'),
-    path('about/', views.AboutPage.as_view(), name = 'about'),
-    path('accounts/', include('accounts.urls', namespace = 'accounts')),
+    path('about/', views.AboutPage.as_view(), name='about'),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('test/', views.TestPage.as_view(), name ='test'),
-    path('thanks/', views.ThanksPage.as_view(), name = 'thanks'),
+    path('test/', views.TestPage.as_view(), name='test'),
+    path('thanks/', views.ThanksPage.as_view(), name='thanks'),
     path('posts/', include("posts.urls", namespace="posts")),
-    path('locations/',include("cities.urls", namespace="cities")),
+    path('locations/', include("cities.urls", namespace="cities")),
 
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

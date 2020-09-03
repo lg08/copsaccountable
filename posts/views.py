@@ -1,62 +1,46 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
-from . import models
 from posts.models import Upvote, Downvote
 from django.urls import reverse
 from django.utils.text import slugify
-# from django.core.files.storage import FileSystemStorage
-
-# pip install django-braces
-from braces.views import SelectRelatedMixin
-
 from . import forms
-from . import views
-from . import urls
-from .models import Post
+from .models import Post, Comment
 from cities.models import City, State
-from django.db.models import Q  # new
-
-
+from django.db.models import Q
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
 class PostList(generic.ListView):
-    model = models.Post
-    # select_related = ("user", "city")  # not entirely sure what this does yet
+    model = Post
     context_object_name = 'post_list'
     template_name = 'posts/post_list.html'
 
 
 class PostDetail(generic.DetailView):
-    model = models.Post
-    # select_related = ("user", "city")
+    model = Post
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # queryset.filter(id__exact=self.kwargs.get()
         return queryset
-    #     return queryset.filter(
-    #         user__username__iexact=self.kwargs.get("username")
-    #     )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)  # general context data
-        this_post = get_object_or_404(models.Post, pk=self.kwargs['pk'])  # just gets the post we're currently on
+        this_post = get_object_or_404(Post, pk=self.kwargs['pk'])
         context['total_upvotes'] = this_post.people_who_upvoted.count()
         context['total_downvotes'] = this_post.people_who_downvoted.count()
-
         context['comment_form'] = forms.CommentForm()
 
         if self.request.user.is_authenticated:
-            this_person_upvoted_it = this_post.people_who_upvoted.filter(user=self.request.user).count()
+            this_person_upvoted_it = this_post.people_who_upvoted.filter(
+                user=self.request.user).count()
             context['this_person_upvoted_it'] = this_person_upvoted_it
-            this_person_downvoted_it = this_post.people_who_downvoted.filter(user=self.request.user).count()
+            this_person_downvoted_it = this_post.people_who_downvoted.filter(
+                user=self.request.user).count()
             context['this_person_downvoted_it'] = this_person_downvoted_it
 
             context['current_user'] = self.request.user
@@ -64,45 +48,33 @@ class PostDetail(generic.DetailView):
 
 
 def create_comment(request, postpk, commentpk, subcomment):
-    post = get_object_or_404(models.Post, pk=postpk)
+    post = get_object_or_404(Post, pk=postpk)
     if request.method == 'POST':
         comment_form = forms.CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             if subcomment == 1:  # it's a subcomment
-                new_comment.comment = get_object_or_404(models.Comment, pk=commentpk)
+                new_comment.comment = get_object_or_404(Comment, pk=commentpk)
             new_comment.post = post
             new_comment.user = request.user
             new_comment.save()
     return HttpResponseRedirect(reverse('posts:detail',
-                                        kwargs={'pk': postpk, 'username': post.user.username}))
-
-class CreatePost(LoginRequiredMixin, generic.CreateView):
-    form_class = forms.PostForm
-    model = models.Post
-    # fields = ('title', 'message', 'city', 'video')
-    template_name = "posts/post_form.html"
-
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs.update({"user": self.request.user})
-    #     return kwargs
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return super().form_valid(form)
-    # the success_url will be the get_absolute_url from models.py
+                                        kwargs={
+                                            'pk': postpk,
+                                            'username': post.user.username
+                                        }))
 
 
-def my_custom_form_view(request):
+def form_create_view(request):
     if request.method == 'POST':
-        form = forms.MyCustomPostFormView(request.POST, request.FILES)
+        form = forms.PostForm(request.POST, request.FILES)
         if form.is_valid():
             new_post = Post()
-            new_post.state = State.objects.get(slug=slugify(form.cleaned_data['state']))
-            new_post.city = City.objects.get(slug=slugify(form.cleaned_data['city']), state=new_post.state)
+            new_post.state = State.objects.get(
+                slug=slugify(form.cleaned_data['state']))
+            new_post.city = City.objects.get(
+                slug=slugify(form.cleaned_data['city']),
+                state=new_post.state)
             new_post.title = form.cleaned_data['title']
             new_post.message = form.cleaned_data['message']
             new_post.user = request.user
@@ -111,24 +83,20 @@ def my_custom_form_view(request):
             new_post.video = form.cleaned_data['video']
             new_post.thumbnail = form.cleaned_data['thumbnail']
             new_post.save()
-            return HttpResponseRedirect(reverse('posts:detail', kwargs={'pk':new_post.pk, 'username':request.user.username}))
+            return HttpResponseRedirect(reverse('posts:detail', kwargs={
+                'pk': new_post.pk,
+                'username': request.user.username
+            }))
     else:
-        form = forms.MyCustomPostFormView()
+        form = forms.PostForm()
     context = {
         'form': form,
         }
     return render(request, 'posts/post_form.html', context)
-    
-def load_cities(request):
-    state_id = request.objects.get('my_state_thing')
-    cities = City.objects.filter(state_id=state_id).order_by('name')
-    return render(request, 'posts/city_dropdown_list_options.html', {'cities': cities})
 
 
-class DeletePost(LoginRequiredMixin, # SelectRelatedMixin,
-                 generic.DeleteView):
-    model = models.Post
-    # select_related = ("user", "city")
+class DeletePost(LoginRequiredMixin, generic.DeleteView):
+    model = Post
     success_url = reverse_lazy("posts:all")
     template_name = 'posts/post_confirm.html'
 
@@ -142,7 +110,7 @@ class DeletePost(LoginRequiredMixin, # SelectRelatedMixin,
 
 
 class UserPosts(generic.ListView):
-    model = models.Post
+    model = Post
     template_name = "posts/user_post_list.html"
 
     def get_queryset(self):
@@ -162,7 +130,7 @@ class UserPosts(generic.ListView):
 
 
 class UserPage(generic.ListView):
-    model = models.Post
+    model = Post
     template_name = "posts/user_page.html"
 
     def get_queryset(self):
@@ -181,13 +149,13 @@ class UserPage(generic.ListView):
         return context
 
 
-
 def UpvoteView(request, pk):
     # post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
     # post.upvotes.add(request.user)
     # request.user.profile.upvoted_posts.add(post)
-    post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
-    upvote, created = Upvote.objects.get_or_create(user=request.user, post=post)
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    upvote, created = Upvote.objects.get_or_create(
+        user=request.user, post=post)
     if post.people_who_downvoted.filter(user=request.user).count() > 0:
         for x in post.people_who_downvoted.filter(user=request.user):
             x.delete()
@@ -196,7 +164,10 @@ def UpvoteView(request, pk):
 
     if not created:
         return HttpResponseRedirect(reverse('posts:detail',
-                                            kwargs={'pk': pk, 'username': post.user.username}))
+                                            kwargs={
+                                                'pk': pk,
+                                                'username': post.user.username
+                                            }))
     else:
         upvote.post = post
         upvote.user = request.user
@@ -204,11 +175,17 @@ def UpvoteView(request, pk):
         post.num_of_upvotes += 1
         post.save()
         return HttpResponseRedirect(reverse('posts:detail',
-                                            kwargs={'pk': pk, 'username': post.user.username}))
+                                            kwargs={
+                                                'pk': pk,
+                                                'username': post.user.username
+                                            }))
+
 
 def DownvoteView(request, pk):
-    post = get_object_or_404(models.Post, id=request.POST.get('post_id'))
-    downvote, created = Downvote.objects.get_or_create(user=request.user, post=post)
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    downvote, created = Downvote.objects.get_or_create(
+        user=request.user,
+        post=post)
     # deletes your previous upvote if you did this
     if post.people_who_upvoted.filter(user=request.user).count() > 0:
         for x in post.people_who_upvoted.filter(user=request.user):
@@ -218,7 +195,10 @@ def DownvoteView(request, pk):
 
     if not created:
         return HttpResponseRedirect(reverse('posts:detail',
-                                            kwargs={'pk': pk, 'username': post.user.username}))
+                                            kwargs={
+                                                'pk': pk,
+                                                'username': post.user.username
+                                            }))
     else:
         downvote.post = post
         downvote.user = request.user
@@ -226,7 +206,11 @@ def DownvoteView(request, pk):
         post.num_of_downvotes += 1
         post.save()
         return HttpResponseRedirect(reverse('posts:detail',
-                                            kwargs={'pk': pk, 'username': post.user.username}))
+                                            kwargs={
+                                                'pk': pk,
+                                                'username': post.user.username
+                                            }))
+
 
 class SearchResultsView(generic.ListView):
     model = Post
@@ -245,6 +229,7 @@ class SearchResultsView(generic.ListView):
         )
         return object_list
 
+
 class WorstPostsView(generic.ListView):
     model = Post
     template_name = 'posts/worst_posts_list.html'
@@ -253,6 +238,7 @@ class WorstPostsView(generic.ListView):
     def get_queryset(self):
         object_list = Post.objects.order_by('-num_of_downvotes')[0:30]
         return object_list
+
 
 class BestPostsView(generic.ListView):
     model = Post

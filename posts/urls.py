@@ -6,7 +6,7 @@ app_name='posts'
 urlpatterns = [
     path('', views.PostList.as_view(), name="all"),
 
-    path("new/", views.my_custom_form_view, name="create"),
+    path("new/", views.form_create_view, name="create"),
     
     path("by/<username>/", views.UserPosts.as_view(),name="for_user"),
     path("by/<username>/<int:pk>/", views.PostDetail.as_view(),name="detail"),
