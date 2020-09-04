@@ -1,26 +1,38 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
+    {% load static %}
     <title>Home</title>
 {% endblock %}
 
 
 
 {% block body %}
+
+    <div class="card bg-dark text-white">
+        <img src="{% static 'pictures/jacky-zeng-6ZeSn5jZzjU-unsplash.jpg' %}" class="card-img my-0" style="max-height:20em; filter:brightness(70%);" alt="...">
+        
+        
+        <div class="card-img-overlay">
+            <center><h1 style="font-size:4em;" class="dope-ass-text text-light">Welcome to CopsAccountable</h1></center>
+            <center>
+                <p class="card-text" style="font-size:1.5em;">A site designed to encourage community oversight of and involvement with the police.</p>
+            </center>
+            </div>
+        
+    </div>
+    
+    
     <div class="container my-dark-grey-background">
 
-        <!-- Header -->
-        <div class="position-relative text-center border-bottom pb-3 mb-3">
-            <!-- <div class="col-md-5 p-lg-5 mx-auto my-5"> -->
-            <h1 class="display-4 font-weight-normal"><strong>Welcome to CopsAccountable</strong></h1>
-            <p class=""lead font-weight-normal">A site designed to encourage community oversight of and involvement with the police.</p>
-            <!-- </div> -->
-            <div class="product-device shadow-sm d-none d-md-block"></div>
-            <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-        </div>
-
-
-        
+        <br/><br/>
+        <h2>What is this site?</h2>
+        <ul class="index-list">
+            <li>A unified place for people to post and view a record of people's interactions with the police, both in their area, and on a national level</li>
+            <br/>
+            <li>A platform where people's opinions on the police can be heard completely freely and with complete anonymity</li>
+        </ul>
+        <br/>
         <h2>The Situation Today: </h2>
         <p>With everything that's been going on in the world recently, it's become more clear than ever that changes in the way the police conduct their business need to happen. We've all witnessed the savage murders of people like George Floyd, Eric Garner, Michael Brown, Tamir Rice, Walter Scott, Alton Sterling, and so many more. If there's one thing we can learn from these videos, it's that the police have proven themselves incapable of properly holding their officers accountable for the actions they commit while on the job, so it falls on us, the people to do so.</p>
 
@@ -37,7 +49,11 @@
     </div>
     
 
-    
+    <style>
+     .index-list {
+         font-size: 1.4em;
+     }
+    </style>    
 
 
 {% endblock %}

@@ -43,16 +43,16 @@
                                 {% csrf_token %}
                                 <button class="border-0" type="submit" name="post_id" value="{{ post.id }}" >
                                     {% if this_person_upvoted_it %}
-                                        {% include 'posts/addons/kiss-emoticon.html' %}
+                                        {% include 'posts/addons/heart.html' %}
                                     {% else %}
-                                        {% include 'posts/addons/kiss-emoticon-outline.html' %}
+                                        {% include 'posts/addons/heart-outline.html' %}
                                     {% endif %}
                                 </button>
                             </form>
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button class="border-0 type="submit" >{% include 'posts/addons/hollow-heart-up.html' %}</button>
+                                <button class="border-0 type="submit" >{% include 'posts/addons/heart-outline.html' %}</button>
                             </form>
                         {% endif %}
                         <p>upvotes: {{ total_upvotes }}</p>
@@ -63,9 +63,9 @@
                                 {% csrf_token %}
                                 <button type="submit" class="border-0" name="post_id" value="{{ post.id }}" class="">
                                     {% if this_person_downvoted_it %}
-                                        {% include 'posts/addons/angry-emoticon.html' %}
+                                        {% include 'posts/addons/heart-broken.html' %}
                                     {% else %}
-                                        {% include 'posts/addons/angry-emoticon-outline.html' %}
+                                        {% include 'posts/addons/heart-broken-outline.html' %}
                                     {% endif %}
                                 </button>
                                 
@@ -73,7 +73,7 @@
                         {% else %}
                             <form action="{% url 'accounts:login' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="border-0">{% include 'posts/addons/hollow-heart-down.html' %}</button>
+                                <button type="submit" class="border-0">{% include 'posts/addons/broken-heart-outline.html' %}</button>
                             </form>
                         {% endif %}
                         <p>downvotes: {{ total_downvotes }}</p>

@@ -24,13 +24,14 @@
                             {% if this_person_downvoted_it %}
                                 {% include 'posts/addons/downvote_button.html' %}
                             {% else %}
-                                {% include 'posts/addons/angry-emoticon.html' %}
+                                {% include 'posts/addons/heart-outline.html' %}
+
                             {% endif %}
                             {{ post.num_of_upvotes }}
                             {% if this_person_upvoted_it %}
                                 {% include 'posts/addons/upvote_button.html' %}
                             {% else %}
-                                {% include 'posts/addons/kiss-emoticon.html' %}
+                                {% include 'posts/addons/broken-heart-outline.html' %}
                             {% endif %}
                             {{ post.num_of_downvotes }}
                         </small></span>

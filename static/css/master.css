@@ -74,3 +74,37 @@ img {
     height: 100%;
     object-fit:  cover;
 }
+h1 {
+    color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    
+    display: inline-block;
+    padding: 15px 0px;
+    position: relative;
+
+
+}
+h2 {
+    color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    
+    display: inline-block;
+    padding: 15px 20px;
+    padding-left: 0px;
+    position: relative;
+}
+h3 {
+    color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    
+    display: inline-block;
+    padding: 15px 20px;
+    padding-left: 0px;
+    position: relative;
+}
