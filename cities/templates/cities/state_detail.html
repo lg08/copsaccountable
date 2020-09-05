@@ -1,37 +1,54 @@
+<!-- shows all cities in the state -->
 {% extends "cities/cities_base.html" %}
 
 
 {% block pre_city %}
-    <div class="container">
+    <div
+        class="container">
         <h1>Cities in {{ state.name }}</h1>
         {% include 'cities/addons/filter-list-items.html' %}
-            
     </div>
 {% endblock %}
 
 
 {% block city_content %}
-    <div class="container">
-        
-        <div class="list-group my-3" id="myDIV">
-            
+    <div
+        class="container">
+
+        <!-- initializes the list group -->
+        <div
+            class="list-group my-3"
+            id="myDIV">
+
+            <!-- sets up a list item for each city -->
             {% for city in state.cities.all %}
-                <a href="{% url 'cities:single' slug=city.slug pk=city.pk %}"
-                   class ="list-group-item-light list-group-item list-group-item-action dope-hover-link
-                         flex-column  my-1 my-dark-grey-background">
-                    <h3 class="mb-1">{{ city.name }}</h3>
-                    
-                    <div class="d-flex w-40 justify-content-between">
-                        <small class="text-muted"><span class="badge badge-secondary">
-                            {{ city.posts.count }}</span> post{{ city.posts.count|pluralize }}</small>
+                <!-- link for each city -->
+                <a
+                    href="{% url 'cities:single' slug=city.slug pk=city.pk %}"
+                    class ="list-group-item-light list-group-item list-group-item-action dope-hover-link flex-column  my-1 my-dark-grey-background">
+                    <h3
+                        class="mb-1">
+                        {{ city.name }}
+                    </h3>
+
+                    <!-- little badge with number of posts -->
+                    <div
+                        class="d-flex w-40 justify-content-between">
+                        <small
+                            class="text-muted">
+                            <span
+                                class="badge badge-secondary">
+                                {{ city.posts.count }}
+                            </span>
+                            post{{ city.posts.count|pluralize }}</small>
                     </div>
-                    
                 </a>
             {% endfor %}
             
         </div>
         
     </div>
+    <!-- puts in the back to top button -->
     {% include 'cities/addons/back_to_top_button.html' %}
 {% endblock %}
 

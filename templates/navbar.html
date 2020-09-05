@@ -1,12 +1,26 @@
+<!-- sets up the navbar for the whole site -->
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-color mb-1">
+<!-- beginning of navbar -->
+<nav
+    class="navbar navbar-expand-lg navbar-color mb-1">
 
     <!-- Navbar Brand -->
-    <a class="navbar-brand nav-link text-dark dope-hover-link" href="{% url 'home' %}"><strong>C.A.</strong></a>
+    <a
+        class="navbar-brand nav-link text-dark dope-hover-link"
+        href="{% url 'home' %}">
+        <strong>C.A.</strong>
+    </a>
 
-    <!-- navbar button -->
-    <button class="dope-ass-text navbar-toggler p-2 dope-hover-link" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" id="this-toggle-button">
+    <!-- navbar collapsible button -->
+    <button
+        class="dope-ass-text navbar-toggler p-2 dope-hover-link"
+        type="button" data-toggle="collapse"
+        data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        id="this-toggle-button">
         <!-- menu icon -->
         <img                
             src="{% static 'icons/menu-black-18dp.svg' %}" 
@@ -17,112 +31,168 @@
         />
     </button>
 
-    
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav nav">
-            <a class="nav-item nav-link text-dark dope-hover-link" href="{% url 'about' %}">About<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link text-dark dope-hover-link" href="{% url 'cities:list_states' %}">States<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link text-dark dope-hover-link" href="{% url 'posts:worst_posts' %}">Worst Posts<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link text-dark dope-hover-link" href="{% url 'posts:best_posts' %}">Best Posts<span class="sr-only">(current)</span></a>
-            <form class="form-inline my-2 my-lg-0" action="{% url 'posts:search' %}" method="GET">
-                <input class="form-control mr-sm-2 this-search-bar" type="search" placeholder="Search for posts" aria-label="Search" name="q">
-        </div>
-
-        <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    <!-- navbar links on the left side -->
+    <div
+        class="collapse navbar-collapse"
+        id="navbarNavAltMarkup">
+        <div
+            class="navbar-nav nav">
+            <a
+                class="nav-item nav-link text-dark dope-hover-link"
+                href="{% url 'about' %}">
+                About<span class="sr-only">(current)</span>
+            </a>
+            <a
+                class="nav-item nav-link text-dark dope-hover-link"
+                href="{% url 'cities:list_states' %}">
+                States<span class="sr-only">(current)</span>
+            </a>
+            <a
+                class="nav-item nav-link text-dark dope-hover-link"
+                href="{% url 'posts:worst_posts' %}">
+                Worst Posts<span class="sr-only">(current)</span>
+            </a>
+            <a
+                class="nav-item nav-link text-dark dope-hover-link"
+                href="{% url 'posts:best_posts' %}">
+                Best Posts<span class="sr-only">(current)</span>
+            </a>
+            <form
+                class="form-inline my-2 my-lg-0"
+                action="{% url 'posts:search' %}"
+                method="GET">
+                <input
+                    class="form-control mr-sm-2 this-search-bar"
+                    type="search"
+                    placeholder="Search for posts"
+                    aria-label="Search"
+                    name="q">
             </form>
+        </div>
     </div>
 
+
+    <!-- navbar links on the right side -->
     <!-- changes to sign in or log jout based on the status of the user -->
-    <ul class="nav justify-content-end collapse navbar-collapse" id="navbarNavAltMarkup">   
+    <ul
+        class="nav justify-content-end collapse navbar-collapse"
+        id="navbarNavAltMarkup">   
         {% if user.is_authenticated %}
-            <li class="nav-item"><a class ="nav-link text-dark dope-hover-link" href="{% url 'posts:create' %}">Post</a></li>
-            
-            <li class="nav-item"><a class ="nav-link text-dark dope-hover-link" href="{% url 'posts:user_page' username=user.username %}">@{{ user.username }}</a></li>
-            <li class="nav-item"><a class ="nav-link text-dark dope-hover-link" href="{% url 'accounts:logout' %}">Log Out</a></li>
+            <li
+                class="nav-item">
+                <a
+                    class ="nav-link text-dark dope-hover-link"
+                    href="{% url 'posts:create' %}">
+                    Post
+                </a>
+            </li>
+            <li
+                class="nav-item">
+                <a
+                    class ="nav-link text-dark dope-hover-link"
+                    href="{% url 'posts:user_page' username=user.username %}">
+                    @{{ user.username }}
+                </a>
+            </li>
+            <li
+                class="nav-item">
+                <a
+                    class ="nav-link text-dark dope-hover-link"
+                    href="{% url 'accounts:logout' %}">
+                    Log Out
+                </a>
+            </li>
         {% else %}
-
-            <li class="nav-item"><a class ="nav-link text-dark dope-hover-link" href="{% url 'accounts:login' %}">Log In</a></li>
-
-
-            <li class="nav-item"><a class ="nav-link text-dark dope-hover-link" href="{% url 'accounts:signup' %}">Sign Up</a></li>
-            
+            <li
+                class="nav-item">
+                <a
+                    class ="nav-link text-dark dope-hover-link"
+                    href="{% url 'accounts:login' %}">
+                    Log In
+                </a>
+            </li>
+            <li
+                class="nav-item">
+                <a
+                    class ="nav-link text-dark dope-hover-link"
+                    href="{% url 'accounts:signup' %}">
+                    Sign Up
+                </a>
+            </li>
         {% endif %}
     </ul>
-    </nav>
+</nav>
 
-    <!-- take from here: https://codepen.io/jstn/pen/zuDst -->
-    <style>
-     /* body,html {
-        margin: 0;
-        font: bold 14px/1.4 'Open Sans', arial, sans-serif;
-        background: #000;
-        } */
-     /* ul { 
-        margin: 150px auto 0; 
-        padding: 0; 
-        list-style: none; 
-        display: table;
-        width: 600px;
-        text-align: center;
-        }
-        li { 
-        display: table-cell; 
-        position: relative; 
-        padding: 15px 0;
-        } */
-     .dope-hover-link {
-         /* color: #fff; */
-         color: #000;
-         text-transform: uppercase;
-         text-decoration: none;
-         letter-spacing: 0.15em;
-         
-         display: inline-block;
-         padding: 15px 20px;
-         position: relative;
-     }
-     .dope-hover-link:after {    
-         background: none repeat scroll 0 0 transparent;
-         bottom: 0;
-         content: "";
-         display: block;
-         height: 2px;
-         left: 50%;
-         position: absolute;
-         /* background: #fff; */
-         background: #000;
-         transition: width 0.3s ease 0s, left 0.3s ease 0s;
-         width: 0;
 
-         color: #000
-     }
-     .dope-hover-link:hover:after { 
-         width: 100%; 
-         left: 0;
-         
-         color: #000;
-     }
-     @media screen and (max-height: 300px) {
-         ul {
-	     margin-top: 40px;
-         }
-     }
 
-     .dope-ass-text {
-         color: #000;
-         text-transform: uppercase;
-         text-decoration: none;
-         letter-spacing: 0.15em;
-         
-         display: inline-block;
-         padding: 15px 20px;
-         position: relative;
-     }
+<!-- take from here: https://codepen.io/jstn/pen/zuDst -->
+<style>
+ .dope-hover-link {
+     /* color: #fff; */
+     color: #000;
+     text-transform: uppercase;
+     text-decoration: none;
+     letter-spacing: 0.15em;
+     
+     display: inline-block;
+     padding: 15px 20px;
+     position: relative;
+ }
+ .dope-hover-link:after {    
+     background: none repeat scroll 0 0 transparent;
+     bottom: 0;
+     content: "";
+     display: block;
+     height: 2px;
+     left: 50%;
+     position: absolute;
+     /* background: #fff; */
+     background: #000;
+     transition: width 0.3s ease 0s, left 0.3s ease 0s;
+     width: 0;
 
-     #this-toggle-button {
-         /* max-width:1em; */
-         font-size:1em;
-         outline:none;
+     color: #000
+ }
+ .dope-hover-link:hover:after { 
+     width: 100%; 
+     left: 0;
+     
+     color: #000;
+ }
+ @media screen and (max-height: 300px) {
+     ul {
+	 margin-top: 40px;
      }
+ }
 
-    </style>
+ .dope-ass-text {
+     color: #000;
+     text-transform: uppercase;
+     text-decoration: none;
+     letter-spacing: 0.15em;
+     
+     display: inline-block;
+     padding: 15px 20px;
+     position: relative;
+ }
+
+ #this-toggle-button {
+     /* max-width:1em; */
+     font-size:1em;
+     outline:none;
+ }
+
+ 
+ input.this-search-bar {
+     background-color: #f9f9f9;
+     color: #000;
+     text-transform: uppercase;
+     text-decoration: none;
+     letter-spacing: 0.15em;
+     
+     display: inline-block;
+     padding: 15px 20px;
+     position: relative;
+ }
+
+</style>

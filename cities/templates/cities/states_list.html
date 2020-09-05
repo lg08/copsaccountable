@@ -1,31 +1,54 @@
+<!-- shows all states in the state -->
 {% extends 'cities/cities_base.html' %}
 
 
 {% block pre_city %}
-    <div class="container">
-        
+    <div
+        class="container">
         <h1>States</h1>
         {% include 'cities/addons/filter-list-items.html' %}
-        
     </div>
 {% endblock %}
 
 
 {% block city_content %}    
-    <div class="container">
-        
-        <div class="list-group my-3" id="myDIV">
-            
+    <div
+        class="container">
+
+        <!-- initializes the list group and makes it filterable -->
+        <div
+            class="list-group my-3"
+            id="myDIV">
+
+            <!-- puts in a list item for each state -->
             {% for state in states_list %}
-                <a href="{% url 'cities:state_detail' slug=state.slug %}"
-                   class ="list-group-item-light list-group-item list-group-item-action dope-hover-link
-                         flex-column  my-1 my-dark-grey-background" onclick="on({{ state.pk }})" data-id="{{ state.pk }}">
-                    <h3 class="mb-1">{{ state.name }}</h3>
+                <a
+                    href="{% url 'cities:state_detail' slug=state.slug %}"
+                    class ="list-group-item-light list-group-item list-group-item-action dope-hover-link flex-column  my-1 my-dark-grey-background"
+                    onclick="on({{ state.pk }})"
+                    data-id="{{ state.pk }}">
+                    <h3
+                        class="mb-1">
+                        {{ state.name }}
+                    </h3>
                 </a>
-                <div class="overlay" id="overlay_{{ state.pk }}" onclick="">
-                    <div class="dope-ass-text" id="text">Loading {{ state.cities.count }} cities in {{ state }}...
-                        <div class="spinner-border spinner-border-sm" role="status">
-                            <span class="sr-only">Loading...</span>
+
+                <!-- handles the overlay for each state -->
+                <div
+                    class="overlay"
+                    id="overlay_{{ state.pk }}"
+                    onclick="">
+                    <div
+                        class="dope-ass-text"
+                        id="text">
+                        Loading {{ state.cities.count }} cities in {{ state }}...
+                        <div
+                            class="spinner-border spinner-border-sm"
+                            role="status">
+                            <span
+                                class="sr-only">
+                                Loading...
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -34,9 +57,12 @@
         </div>
         
     </div>
+
+    <!-- puts in the back to top button -->
     {% include 'cities/addons/back_to_top_button.html' %}
 
 
+    <!-- sets up the filter bar -->
     <script>
      function on(id) {
          str = "overlay_id";
@@ -50,6 +76,7 @@
      }
     </script>
 
+    <!-- styles the overlay -->
     <style>
      .overlay {
          position: fixed;

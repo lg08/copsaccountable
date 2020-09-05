@@ -1,3 +1,4 @@
+<!-- shows a post in detail -->
 {% extends "posts/post_base.html" %}
 
 {% block prepost %}
@@ -7,41 +8,82 @@
 
 {% block post_content %}
 
-    <div class="container">
-        <div class="card bg-light w-100 mt-3">
-            <div class="card-header my-dark-grey-background"><h2><center>{{ post.title }}</center></h2></div>
-            <div class="card-body my-dark-grey-background">
-                <div class="row">
-                    <div class="col-12">
+    <div
+        class="container">
+
+        <!-- initializes the card for the post -->
+        <div
+            class="card bg-light w-100 mt-3">
+
+            <!-- header of the card -->
+            <div
+                class="card-header my-dark-grey-background">
+                <h2>
+                    <center>{{ post.title }}</center>
+                </h2>
+            </div>
+
+            <!-- body of the card -->
+            <div
+                class="card-body my-dark-grey-background">
+                <div
+                    class="row">
+                    <div
+                        class="col-12">
+
+                        <!-- if the post has a video attached, show it -->
                         {% if post.video %}
-                            <video width="100%"  controls>
-                                <source src="{{ post.video.url }}" type="video/mp4">
+                            <video
+                                width="100%"
+                                controls>
+                                <source
+                                    src="{{ post.video.url }}"
+                                    type="video/mp4">
                                 <!-- <source src="movie.ogg" type="video/ogg"> -->
                                 Your browser does not support the video tag.
                             </video>
                         {% endif %}
                     </div>
+
+                    <!-- shows the message -->
                     <div class="col-12">
                         <h4>Message: </h4>
                         <p>{{ post.message }}</p>
                     </div>
+
+                    <!-- shows the time information -->
                     <div class="col-12">
                         <h5>Time Info:</h5>
                         <p>{{ post.time_information }}</p>
                     </div>
+
+                    <!-- shows the location information -->
                     <div class="col-12">
                         <h5>Place Info:</h5>
                         <p>{{ post.location_information }}</p>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer my-dark-grey-background">
-                <div class="row justify-content-center">
-                    <div class="col">
+            </div>              <!--end of card for the post-->
+
+            <!-- start of card footer -->
+            <div
+                class="card-footer my-dark-grey-background">
+                <div
+                    class="row justify-content-center">
+
+                    <!-- the upvote button -->
+                    <div
+                        class="col">
                         {% if user.is_authenticated %}
-                            <form action="{% url 'posts:upvote_post' pk=post.pk %}" method="POST">
+                            <form
+                                action="{% url 'posts:upvote_post' pk=post.pk %}"
+                                method="POST">
                                 {% csrf_token %}
-                                <button class="border-0" type="submit" name="post_id" value="{{ post.id }}" >
+                                <button
+                                    class="border-0"
+                                    type="submit"
+                                    name="post_id"
+                                    value="{{ post.id }}" >
                                     {% if this_person_upvoted_it %}
                                         {% include 'posts/addons/heart.html' %}
                                     {% else %}
@@ -50,18 +92,33 @@
                                 </button>
                             </form>
                         {% else %}
-                            <form action="{% url 'accounts:login' %}" method="POST">
+                            <form
+                                action="{% url 'accounts:login' %}"
+                                method="POST">
                                 {% csrf_token %}
-                                <button class="border-0 type="submit" >{% include 'posts/addons/heart-outline.html' %}</button>
+                                <button
+                                    class="border-0 type="submit" >
+                                    {% include 'posts/addons/heart-outline.html' %}
+                                </button>
                             </form>
                         {% endif %}
                         <p>upvotes: {{ total_upvotes }}</p>
                     </div>
-                    <div class="col">
+
+                    <!-- the downvote button -->
+                    <div 
+                        class="col">
                         {% if user.is_authenticated %}
-                            <form action="{% url 'posts:downvote_post' pk=post.pk %}" method="POST">
+                            <form 
+                                action="{% url 'posts:downvote_post' pk=post.pk %}" 
+                                method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="border-0" name="post_id" value="{{ post.id }}" class="">
+                                <button 
+                                    type="submit" 
+                                    class="border-0" 
+                                    name="post_id" 
+                                    value="{{ post.id }}" 
+                                    class="">
                                     {% if this_person_downvoted_it %}
                                         {% include 'posts/addons/heart-broken.html' %}
                                     {% else %}
@@ -71,67 +128,81 @@
                                 
                             </form>
                         {% else %}
-                            <form action="{% url 'accounts:login' %}" method="POST">
+                            <form 
+                                action="{% url 'accounts:login' %}" 
+                                method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="border-0">{% include 'posts/addons/broken-heart-outline.html' %}</button>
+                                <button 
+                                    type="submit" 
+                                    class="border-0">{% include 'posts/addons/broken-heart-outline.html' %}
+                                </button>
                             </form>
                         {% endif %}
                         <p>downvotes: {{ total_downvotes }}</p>
                     </div>
-                    <div class="col">
+
+                    <!-- Comment button -->
+                    <div 
+                        class="col">
                         {% if user.is_authenticated %}
-                            <button class="border-0" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{% include 'posts/addons/reply-button.html' %}</button>
+                            <button 
+                                class="border-0" 
+                                type="button" 
+                                data-toggle="collapse" 
+                                data-target=".multi-collapse" 
+                                aria-expanded="false" 
+                                aria-controls="multiCollapseExample1 multiCollapseExample2">
+                                {% include 'posts/addons/reply-button.html' %}
+                            </button>
                         {% else %}
-                            <form action="{% url 'accounts:login' %}" method="POST">
+                            <form 
+                                action="{% url 'accounts:login' %}" 
+                                method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="">{% include 'posts/addons/reply-button.html' %}</button>
+                                <button 
+                                    type="submit" 
+                                    class="">
+                                    {% include 'posts/addons/reply-button.html' %}
+                                </button>
                             </form>
                         {% endif %}
                     </div>
                     {% if current_user == post.user %}
-                        <div class="col">
+                        <div 
+                            class="col">
 
-                            <form action="{% url 'posts:delete' pk=post.pk %}">
+                            <form 
+                                action="{% url 'posts:delete' pk=post.pk %}">
                                 {% csrf_token %}
-                                <button class="border-0">{% include 'posts/addons/trash-button.html' %}</button>
+                                <button 
+                                    class="border-0">
+                                    {% include 'posts/addons/trash-button.html' %}
+                                </button>
                             </form>
                         </div>
-
                     {% endif %}
                 </div>
-                </div>
+            </div>
         </div>
+
         <!-- Comment Form -->
         <p>
-            <form action="{% url 'posts:create_comment' postpk=post.pk commentpk=post.pk subcomment=0 %}" method="POST" class="collapse multi-collapse">
+            <form 
+                action="{% url 'posts:create_comment' postpk=post.pk commentpk=post.pk subcomment=0 %}" 
+                method="POST" 
+                class="collapse multi-collapse">
                 {% bootstrap_form comment_form %}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-secondary">Submit</button>
+                <button 
+                    type="submit" 
+                    class="btn btn-secondary">
+                    Submit
+                </button>
             </form>
         </p>                        
     </div>                      <!--container-->
-    
-    
-    
-    
-
-    <p>
-        {% if this_person_upvoted_it >= 1 %}
-            <!-- <p1>you already upvoted this</p1> -->
-        {% else %}
-            <!-- <p>you have not upvoted this yet</p> -->
-        {% endif %}
-
-        {% if this_person_downvoted_it >= 1 %}
-            <!-- <p1>you already downvoted this</p1> -->
-        {% else %}
-            <!-- <p>you have not downvoted this yet</p> -->
-        {% endif %}
-    </p>
-
-
-
 {% endblock %}
+
 
 {% block post_post %}
     <div class="container">
