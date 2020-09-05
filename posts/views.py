@@ -20,6 +20,9 @@ class PostList(generic.ListView):
     context_object_name = 'post_list'
     template_name = 'posts/post_list.html'
 
+    def get_queryset(self):
+        object_list = Post.objects.all()[0:30]
+        return object_list
 
 class PostDetail(generic.DetailView):
     model = Post

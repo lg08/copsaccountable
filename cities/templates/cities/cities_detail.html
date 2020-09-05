@@ -1,6 +1,11 @@
 <!-- shows all posts in a city -->
 {% extends "cities/cities_base.html" %}
 
+{% block page_title %}
+    {% load static %}
+    <title>Posts</title>
+{% endblock %}
+
 {% block pre_city %}
     <div class="container">
         

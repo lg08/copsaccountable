@@ -27,7 +27,7 @@ SECRET_KEY = 'eui559nd7n@26be=g%(is415du3vdhyzp_!5!ywt($4htvrl_-'
 DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.14',]
-
+# check here: http://davidwilson.me/2013/08/18/Testing-Django-on-mobile-device-locally.html
 
 # Application definition
 

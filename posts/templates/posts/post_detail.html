@@ -1,6 +1,12 @@
 <!-- shows a post in detail -->
 {% extends "posts/post_base.html" %}
 
+{% block page_title %}
+    {% load static %}
+    <title>Post</title>
+{% endblock %}
+
+
 {% block prepost %}
     {% load bootstrap4 %}
     {% load custom_tags %}
@@ -39,7 +45,7 @@
                                 <source
                                     src="{{ post.video.url }}"
                                     type="video/mp4">
-                                <!-- <source src="movie.ogg" type="video/ogg"> -->
+                                <source src="movie.ogg" type="video/ogg">
                                 Your browser does not support the video tag.
                             </video>
                         {% endif %}
