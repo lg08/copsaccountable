@@ -14,21 +14,25 @@
             
         </div>
         
-        <div class="col-8 card-body">
-            <div class="row no-gutters">
-                <div class="col-12">
-                    <h5 class="card-title my-0 py-0"
+        <div class="col-8 card-body py-0"
+        >
+            <div class="row no-gutters"
+
+            >
+                <div class="col-12 align-self-start"
+                >
+                    <h5 class="card-title my-1 py-0"
                         style="font-size:2vh;"
-                    >{{ post.title }}</h5>
+                    ><strong>{{ post.title }}</strong></h5>
                     <p class="card-text my-0 py-0"
                        style="font-size:1.5vh;"
                     >{{ post.message }}</p>
                 </div>
-                <div class="row no-gutters" style="position:absolute;bottom:0;">
-                    <div class="col-12 align-self-end">
-                        <span class="col card-link text-muted"
-                            <small>
-                                {% if this_person_downvoted_it %}
+                <div class="row no-gutters align-content-end align-self-end w-100" style="position:absolute;bottom:0;">
+                    <!-- <div class="col-12 align-self-end"> -->
+                    <span class="col card-link text-muted"
+                        <small>
+                            {% if this_person_downvoted_it %}
                                 {% include 'posts/addons/downvote_button.html' %}
                             {% else %}
                                 {% include 'posts/addons/heart-outline.html' %}
@@ -41,19 +45,19 @@
                                 {% include 'posts/addons/broken-heart-outline.html' %}
                             {% endif %}
                             {{ post.num_of_downvotes }}
-                            </small>
-                        </span>
-                        <span class="col card-link text-muted"
-                            <small>: {{ post.post_comments.count }}</small>
-                        </span>
-                        <span class="col card-link text-muted"
-                            <small>{{ post.city }}, {{ post.state }}</small>
-                        </span>        
-                    </div>
+                        </small>
+                    </span>
+                    <span class="col card-link text-muted"
+                        <small>comments: {{ post.post_comments.count }}</small>
+                    </span>
+                    <span class="col card-link text-muted"
+                        <small>{{ post.city }}, {{ post.state }}</small>
+                    </span>        
+                    <!-- </div> -->
                 </div>
                 
-            </div>
-            
+        </div>
+        
         </div>
         
     </div>

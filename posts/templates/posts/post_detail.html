@@ -41,7 +41,9 @@
                         {% if post.video %}
                             <video
                                 width="100%"
-                                controls>
+                                controls="true"
+                                playsinline>
+
                                 <source
                                     src="{{ post.video.url }}"
                                     type="video/mp4">
@@ -167,12 +169,14 @@
                                 {% csrf_token %}
                                 <button 
                                     type="submit" 
-                                    class="">
+                                    class="border-0">
                                     {% include 'posts/addons/reply-button.html' %}
                                 </button>
                             </form>
                         {% endif %}
                     </div>
+
+                    <!-- adds a trash button if the user is the creator -->
                     {% if current_user == post.user %}
                         <div 
                             class="col">
@@ -187,6 +191,7 @@
                             </form>
                         </div>
                     {% endif %}
+
                 </div>
             </div>
         </div>
@@ -220,4 +225,10 @@
             {% include 'posts/comment.html' %}
         {% endfor %}
     </div>
+
+
+    
+    
+    
+
 {% endblock %}

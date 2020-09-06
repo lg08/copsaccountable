@@ -116,6 +116,7 @@ class Comment(models.Model):
     def __str__(self):
         return "{} commented '{}'".format(self.user, self.message)
 
+
 class Upvote(models.Model):
     user = models.ForeignKey(
         User,
@@ -130,6 +131,7 @@ class Upvote(models.Model):
 
     def __str__(self):
         return "{} upvoted '{}'".format(self.user, self.post)
+
 
 class Downvote(models.Model):
     user = models.ForeignKey(
